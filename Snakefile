@@ -23,7 +23,7 @@ rule parse:
         sequences = "results/sequences_{segment}.fasta",
         metadata = "results/metadata_{segment}.tsv"
     params:
-        fasta_fields = "strain accession segment date region country host author title journal puburl"
+        fasta_fields = "strain accession segment date region country host authors title journal puburl"
     shell:
         """
         augur parse \
