@@ -1,5 +1,7 @@
 # nextstrain.org/lassa
 
+[![Build Status](https://github.com/nextstrain/lassa/actions/workflows/ci.yaml/badge.svg?branch=master)](https://github.com/nextstrain/lassa/actions/workflows/ci.yaml)
+
 This is the [Nextstrain](https://nextstrain.org) build for Lassa, visible at
 [nextstrain.org/lassa](https://nextstrain.org/lassa).
 
