@@ -16,7 +16,7 @@ rule files:
 files = rules.files.params
 
 rule parse:
-    message: "Parsing fasta into sequences and metadata"
+    """Parsing fasta into sequences and metadata"""
     input:
         sequences = files.input_fasta
     output:
@@ -34,12 +34,11 @@ rule parse:
         """
 
 rule filter:
-    message:
-        """
-        Filtering to
-          - {params.sequences_per_group} sequence(s) per {params.group_by!s}
-          - excluding strains in {input.exclude}
-        """
+    """
+    Filtering to
+      - {params.sequences_per_group} sequence(s) per {params.group_by!s}
+      - excluding strains in {input.exclude}
+    """
     input:
         sequences = "results/sequences_{segment}.fasta",
         metadata = "results/metadata_{segment}.tsv",
@@ -61,11 +60,10 @@ rule filter:
         """
 
 rule align:
-    message:
-        """
-        Aligning sequences to {input.reference}
-          - filling gaps with N
-        """
+    """
+    Aligning sequences to {input.reference}
+      - filling gaps with N
+    """
     input:
         sequences = "results/filtered_{segment}.fasta",
         reference = files.reference
@@ -81,7 +79,7 @@ rule align:
         """
 
 rule tree:
-    message: "Building tree"
+    """Building tree"""
     input:
         alignment = "results/aligned_{segment}.fasta"
     output:
@@ -97,14 +95,13 @@ rule tree:
         """
 
 rule refine:
-    message:
-        """
-        Refining tree
-          - estimate timetree
-          - use {params.coalescent} coalescent timescale
-          - estimate {params.date_inference} node dates
-          - fix clock rate at {params.clock_rate}
-        """
+    """
+    Refining tree
+      - estimate timetree
+      - use {params.coalescent} coalescent timescale
+      - estimate {params.date_inference} node dates
+      - fix clock rate at {params.clock_rate}
+    """
     input:
         tree = "results/tree_raw_{segment}.nwk",
         alignment = "results/aligned_{segment}.fasta",
@@ -132,7 +129,7 @@ rule refine:
         """
 
 rule ancestral:
-    message: "Reconstructing ancestral sequences and mutations"
+    """Reconstructing ancestral sequences and mutations"""
     input:
         tree = "results/tree_{segment}.nwk",
         alignment = "results/aligned_{segment}.fasta",
@@ -150,7 +147,7 @@ rule ancestral:
         """
 
 rule translate:
-    message: "Translating amino acid sequences"
+    """Translating amino acid sequences"""
     input:
         tree = "results/tree_{segment}.nwk",
         node_data = "results/nt_muts_{segment}.json",
@@ -167,7 +164,7 @@ rule translate:
         """
 
 rule traits:
-    message: "Inferring ancestral traits for {params.columns!s}"
+    """Inferring ancestral traits for {params.columns!s}"""
     input:
         tree = "results/tree_{segment}.nwk",
         metadata = "results/metadata_{segment}.tsv",
@@ -186,7 +183,7 @@ rule traits:
         """
 
 rule export:
-    message: "Exporting data files for for auspice"
+    """Exporting data files for for auspice"""
     input:
         tree = "results/tree_{segment}.nwk",
         metadata = "results/metadata_{segment}.tsv",
