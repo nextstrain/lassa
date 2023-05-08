@@ -41,8 +41,8 @@ rule filter:
           - excluding strains in {input.exclude}
         """
     input:
-        sequences = rules.parse.output.sequences,
-        metadata = rules.parse.output.metadata,
+        sequences = "results/sequences_{segment}.fasta",
+        metadata = "results/metadata_{segment}.tsv",
         exclude = files.dropped_strains
     output:
         sequences = "results/filtered_{segment}.fasta"
@@ -67,7 +67,7 @@ rule align:
           - filling gaps with N
         """
     input:
-        sequences = rules.filter.output.sequences,
+        sequences = "results/filtered_{segment}.fasta",
         reference = files.reference
     output:
         alignment = "results/aligned_{segment}.fasta"
@@ -83,7 +83,7 @@ rule align:
 rule tree:
     message: "Building tree"
     input:
-        alignment = rules.align.output.alignment
+        alignment = "results/aligned_{segment}.fasta"
     output:
         tree = "results/tree_raw_{segment}.nwk"
     params:
@@ -106,9 +106,9 @@ rule refine:
           - fix clock rate at {params.clock_rate}
         """
     input:
-        tree = rules.tree.output.tree,
-        alignment = rules.align.output,
-        metadata = rules.parse.output.metadata
+        tree = "results/tree_raw_{segment}.nwk",
+        alignment = "results/aligned_{segment}.fasta",
+        metadata = "results/metadata_{segment}.tsv",
     output:
         tree = "results/tree_{segment}.nwk",
         node_data = "results/branch_lengths_{segment}.json"
@@ -134,8 +134,8 @@ rule refine:
 rule ancestral:
     message: "Reconstructing ancestral sequences and mutations"
     input:
-        tree = rules.refine.output.tree,
-        alignment = rules.align.output
+        tree = "results/tree_{segment}.nwk",
+        alignment = "results/aligned_{segment}.fasta",
     output:
         node_data = "results/nt_muts_{segment}.json"
     params:
@@ -152,8 +152,8 @@ rule ancestral:
 rule translate:
     message: "Translating amino acid sequences"
     input:
-        tree = rules.refine.output.tree,
-        node_data = rules.ancestral.output.node_data,
+        tree = "results/tree_{segment}.nwk",
+        node_data = "results/nt_muts_{segment}.json",
         reference = files.reference
     output:
         node_data = "results/aa_muts_{segment}.json"
@@ -169,8 +169,8 @@ rule translate:
 rule traits:
     message: "Inferring ancestral traits for {params.columns!s}"
     input:
-        tree = rules.refine.output.tree,
-        metadata = rules.parse.output.metadata
+        tree = "results/tree_{segment}.nwk",
+        metadata = "results/metadata_{segment}.tsv",
     output:
         node_data = "results/traits_{segment}.json",
     params:
@@ -188,12 +188,12 @@ rule traits:
 rule export:
     message: "Exporting data files for for auspice"
     input:
-        tree = rules.refine.output.tree,
-        metadata = rules.parse.output.metadata,
-        branch_lengths = rules.refine.output.node_data,
-        traits = rules.traits.output.node_data,
-        nt_muts = rules.ancestral.output.node_data,
-        aa_muts = rules.translate.output.node_data,
+        tree = "results/tree_{segment}.nwk",
+        metadata = "results/metadata_{segment}.tsv",
+        branch_lengths = "results/branch_lengths_{segment}.json",
+        traits = "results/traits_{segment}.json",
+        nt_muts = "results/nt_muts_{segment}.json",
+        aa_muts = "results/aa_muts_{segment}.json",
         colors = files.colors,
         auspice_config = files.auspice_config
     output:
