@@ -7,31 +7,12 @@ rule all:
 
 rule files:
     params:
-        input_fasta = "data/lassa_{segment}.fasta",
         dropped_strains = "config/dropped_strains.txt",
         reference = "config/lassa_{segment}.gb",
         colors = "config/colors.tsv",
         auspice_config = "config/auspice_config.json"
 
 files = rules.files.params
-
-rule parse:
-    """Parsing fasta into sequences and metadata"""
-    input:
-        sequences = files.input_fasta
-    output:
-        sequences = "results/sequences_{segment}.fasta",
-        metadata = "results/metadata_{segment}.tsv"
-    params:
-        fasta_fields = "strain accession segment date region country host authors title journal puburl"
-    shell:
-        """
-        augur parse \
-            --sequences {input.sequences} \
-            --output-sequences {output.sequences} \
-            --output-metadata {output.metadata} \
-            --fields {params.fasta_fields}
-        """
 
 rule filter:
     """
@@ -40,8 +21,8 @@ rule filter:
       - excluding strains in {input.exclude}
     """
     input:
-        sequences = "results/sequences_{segment}.fasta",
-        metadata = "results/metadata_{segment}.tsv",
+        sequences = "data/sequences_{segment}.fasta",
+        metadata = "data/metadata_{segment}.tsv",
         exclude = files.dropped_strains
     output:
         sequences = "results/filtered_{segment}.fasta"
@@ -105,7 +86,7 @@ rule refine:
     input:
         tree = "results/tree_raw_{segment}.nwk",
         alignment = "results/aligned_{segment}.fasta",
-        metadata = "results/metadata_{segment}.tsv",
+        metadata = "data/metadata_{segment}.tsv",
     output:
         tree = "results/tree_{segment}.nwk",
         node_data = "results/branch_lengths_{segment}.json"
@@ -167,7 +148,7 @@ rule traits:
     """Inferring ancestral traits for {params.columns!s}"""
     input:
         tree = "results/tree_{segment}.nwk",
-        metadata = "results/metadata_{segment}.tsv",
+        metadata = "data/metadata_{segment}.tsv",
     output:
         node_data = "results/traits_{segment}.json",
     params:
@@ -186,7 +167,7 @@ rule export:
     """Exporting data files for for auspice"""
     input:
         tree = "results/tree_{segment}.nwk",
-        metadata = "results/metadata_{segment}.tsv",
+        metadata = "data/metadata_{segment}.tsv",
         branch_lengths = "results/branch_lengths_{segment}.json",
         traits = "results/traits_{segment}.json",
         nt_muts = "results/nt_muts_{segment}.json",
