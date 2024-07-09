@@ -6,7 +6,7 @@ workflow and defines its default output(s).
 workdir: workflow.current_basedir
 
 # Use default configuration values. Override with Snakemake's --configfile/--config options.
-configfile: "config/config.yaml"
+configfile: "defaults/config.yaml"
 
 SEGMENTS = ["l", "s"]
 

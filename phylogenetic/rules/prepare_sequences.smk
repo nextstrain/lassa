@@ -55,7 +55,7 @@ rule align:
     """
     input:
         sequences = "results/filtered_{segment}.fasta",
-        reference = "config/lassa_{segment}.gb"
+        reference = "defaults/lassa_{segment}.gb"
     output:
         alignment = "results/aligned_{segment}.fasta"
     shell:

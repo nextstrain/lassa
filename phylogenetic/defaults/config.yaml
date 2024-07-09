@@ -5,7 +5,7 @@
 # do not have to dig through the workflows to figure out the default values
 
 filter:
-  exclude: "config/dropped_strains.txt"
+  exclude: "defaults/dropped_strains.txt"
   group_by: "country year"
   sequences_per_group: 2
 
@@ -24,5 +24,5 @@ traits:
   columns: "country"
 
 export:
-  auspice_config: "config/auspice_config.json"
-  colors: "config/colors.tsv"
+  auspice_config: "defaults/auspice_config.json"
+  colors: "defaults/colors.tsv"

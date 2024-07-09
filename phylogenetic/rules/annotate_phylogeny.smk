@@ -54,7 +54,7 @@ rule translate:
     input:
         tree = "results/tree_{segment}.nwk",
         node_data = "results/nt_muts_{segment}.json",
-        reference = "config/lassa_{segment}.gb"
+        reference = "defaults/lassa_{segment}.gb"
     output:
         node_data = "results/aa_muts_{segment}.json"
     shell:
