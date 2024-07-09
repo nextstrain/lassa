@@ -1,10 +1,10 @@
 rule copy_example_data:
     input:
-        sequences="example_data/sequences.fasta",
-        metadata="example_data/metadata.tsv",
+        sequences="example_data/sequences_{segment}.fasta",
+        metadata="example_data/metadata_{segment}.tsv",
     output:
-        sequences="data/sequences.fasta",
-        metadata="data/metadata.tsv",
+        sequences="data/sequences_{segment}.fasta",
+        metadata="data/metadata_{segment}.tsv",
     shell:
         """
         cp -f {input.sequences} {output.sequences}
