@@ -29,33 +29,15 @@ rule all:
 include: "rules/fetch_from_ncbi.smk"
 include: "rules/curate.smk"
 
-
-# We are pushing to standardize ingest workflows with Nextclade runs to include
-# Nextclade outputs in our publicly hosted data. However, if a Nextclade dataset
-# does not already exist, creating one requires curated data as input, so we are making
-# Nextclade steps optional here.
-#
-# If Nextclade config values are included, the nextclade rules will create the
-# final metadata TSV by joining the Nextclade output with the metadata.
-# If Nextclade configs are not included, we rename the subset metadata TSV
-# to the final metadata TSV.
-# To run nextclade.smk rules, include the `defaults/nextclade_config.yaml`
-# config file with `nextstrain build ingest --configfile defaults/nextclade_config.yaml`.
-if "nextclade" in config:
-
-    include: "rules/nextclade.smk"
-
-else:
-
-    rule create_final_metadata:
-        input:
-            metadata="data/subset_metadata.tsv"
-        output:
-            metadata="results/metadata.tsv"
-        shell:
-            """
-            mv {input.metadata} {output.metadata}
-            """
+rule create_final_metadata:
+    input:
+        metadata="data/subset_metadata.tsv"
+    output:
+        metadata="results/metadata.tsv"
+    shell:
+        """
+        mv {input.metadata} {output.metadata}
+        """
 
 # Allow users to import custom rules provided via the config.
 # This allows users to run custom rules that can extend or override the workflow.
