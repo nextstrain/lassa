@@ -22,56 +22,7 @@ rule files:
 files = rules.files.params
 
 include: "rules/prepare_sequences.smk"
-
-rule tree:
-    """Building tree"""
-    input:
-        alignment = "results/aligned_{segment}.fasta"
-    output:
-        tree = "results/tree_raw_{segment}.nwk"
-    params:
-        method = "iqtree"
-    shell:
-        """
-        augur tree \
-            --alignment {input.alignment} \
-            --output {output.tree} \
-            --method {params.method}
-        """
-
-rule refine:
-    """
-    Refining tree
-      - estimate timetree
-      - use {params.coalescent} coalescent timescale
-      - estimate {params.date_inference} node dates
-      - fix clock rate at {params.clock_rate}
-    """
-    input:
-        tree = "results/tree_raw_{segment}.nwk",
-        alignment = "results/aligned_{segment}.fasta",
-        metadata = "data/metadata_{segment}.tsv",
-    output:
-        tree = "results/tree_{segment}.nwk",
-        node_data = "results/branch_lengths_{segment}.json"
-    params:
-        coalescent = "opt",
-        date_inference = "marginal",
-        clock_rate = 0.0006
-    shell:
-        """
-        augur refine \
-            --tree {input.tree} \
-            --alignment {input.alignment} \
-            --metadata {input.metadata} \
-            --output-tree {output.tree} \
-            --output-node-data {output.node_data} \
-            --timetree \
-            --coalescent {params.coalescent} \
-            --clock-rate {params.clock_rate} \
-            --date-confidence \
-            --date-inference {params.date_inference}
-        """
+include: "rules/construct_phylogeny.smk"
 
 rule ancestral:
     """Reconstructing ancestral sequences and mutations"""
