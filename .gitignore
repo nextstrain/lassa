@@ -1,10 +1,13 @@
 # Files created by the pipeline, which we want to keep out of git
 # (or at least out of _this_ git repo).
-data/
-results/
-auspice/
-build/
-
+*data/
+*results/
+*auspice/
+*build/
+*results/
+*logs/
+*benchmarks/
+*.snakemake/
 # Sensitive environment variables
 environment*
 
