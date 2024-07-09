@@ -24,32 +24,7 @@ files = rules.files.params
 include: "rules/prepare_sequences.smk"
 include: "rules/construct_phylogeny.smk"
 include: "rules/annotate_phylogeny.smk"
-
-rule export:
-    """Exporting data files for for auspice"""
-    input:
-        tree = "results/tree_{segment}.nwk",
-        metadata = "data/metadata_{segment}.tsv",
-        branch_lengths = "results/branch_lengths_{segment}.json",
-        traits = "results/traits_{segment}.json",
-        nt_muts = "results/nt_muts_{segment}.json",
-        aa_muts = "results/aa_muts_{segment}.json",
-        colors = files.colors,
-        auspice_config = files.auspice_config
-    output:
-        auspice_tree = "auspice/lassa_{segment}_tree.json",
-        auspice_meta = "auspice/lassa_{segment}_meta.json"
-    shell:
-        """
-        augur export v1 \
-            --tree {input.tree} \
-            --metadata {input.metadata} \
-            --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts} \
-            --colors {input.colors} \
-            --auspice-config {input.auspice_config} \
-            --output-tree {output.auspice_tree} \
-            --output-meta {output.auspice_meta}
-        """
+include: "rules/export.smk"
 
 # Allow users to import custom rules provided via the config.
 # This allows users to run custom rules that can extend or override the workflow.
