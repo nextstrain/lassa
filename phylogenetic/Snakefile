@@ -5,21 +5,15 @@ workflow and defines its default output(s).
 # The workflow filepaths are written relative to this Snakefile's base directory
 workdir: workflow.current_basedir
 
+# Use default configuration values. Override with Snakemake's --configfile/--config options.
+configfile: "config/config.yaml"
+
 SEGMENTS = ["l", "s"]
 
 rule all:
     input:
         auspice_tree = expand("auspice/lassa_{segment}_tree.json", segment=SEGMENTS),
         auspice_meta = expand("auspice/lassa_{segment}_meta.json", segment=SEGMENTS)
-
-rule files:
-    params:
-        dropped_strains = "config/dropped_strains.txt",
-        reference = "config/lassa_{segment}.gb",
-        colors = "config/colors.tsv",
-        auspice_config = "config/auspice_config.json"
-
-files = rules.files.params
 
 include: "rules/prepare_sequences.smk"
 include: "rules/construct_phylogeny.smk"

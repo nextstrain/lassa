@@ -34,8 +34,8 @@ rule export:
         traits = "results/traits_{segment}.json",
         nt_muts = "results/nt_muts_{segment}.json",
         aa_muts = "results/aa_muts_{segment}.json",
-        colors = files.colors,
-        auspice_config = files.auspice_config
+        colors = config['export']['colors'],
+        auspice_config = config['export']['auspice_config'],
     output:
         auspice_tree = "auspice/lassa_{segment}_tree.json",
         auspice_meta = "auspice/lassa_{segment}_meta.json"

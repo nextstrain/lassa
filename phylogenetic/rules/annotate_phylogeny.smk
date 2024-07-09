@@ -54,7 +54,7 @@ rule translate:
     input:
         tree = "results/tree_{segment}.nwk",
         node_data = "results/nt_muts_{segment}.json",
-        reference = files.reference
+        reference = "config/lassa_{segment}.gb"
     output:
         node_data = "results/aa_muts_{segment}.json"
     shell:
@@ -74,7 +74,7 @@ rule traits:
     output:
         node_data = "results/traits_{segment}.json",
     params:
-        columns = "country"
+        columns = config['traits']['columns']
     shell:
         """
         augur traits \

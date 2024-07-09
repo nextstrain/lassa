@@ -31,12 +31,12 @@ rule filter:
     input:
         sequences = "data/sequences_{segment}.fasta",
         metadata = "data/metadata_{segment}.tsv",
-        exclude = files.dropped_strains
+        exclude = config['filter']['exclude']
     output:
         sequences = "results/filtered_{segment}.fasta"
     params:
-        group_by = "country year",
-        sequences_per_group = 2,
+        group_by = config['filter']['group_by'],
+        sequences_per_group = config['filter']['sequences_per_group'],
     shell:
         """
         augur filter \
@@ -55,7 +55,7 @@ rule align:
     """
     input:
         sequences = "results/filtered_{segment}.fasta",
-        reference = files.reference
+        reference = "config/lassa_{segment}.gb"
     output:
         alignment = "results/aligned_{segment}.fasta"
     shell:
