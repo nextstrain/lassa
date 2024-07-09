@@ -35,6 +35,7 @@ rule export:
         nt_muts = "results/nt_muts_{segment}.json",
         aa_muts = "results/aa_muts_{segment}.json",
         colors = config['export']['colors'],
+        description = config['export']['description'],
         auspice_config = config['export']['auspice_config'],
     output:
         auspice = "auspice/lassa_{segment}.json",
@@ -45,6 +46,7 @@ rule export:
             --metadata {input.metadata} \
             --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts} \
             --colors {input.colors} \
+            --description {input.description} \
             --auspice-config {input.auspice_config} \
             --output {output.auspice} \
             --include-root-sequence-inline
