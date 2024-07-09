@@ -37,16 +37,15 @@ rule export:
         colors = config['export']['colors'],
         auspice_config = config['export']['auspice_config'],
     output:
-        auspice_tree = "auspice/lassa_{segment}_tree.json",
-        auspice_meta = "auspice/lassa_{segment}_meta.json"
+        auspice = "auspice/lassa_{segment}.json",
     shell:
         """
-        augur export v1 \
+        augur export v2 \
             --tree {input.tree} \
             --metadata {input.metadata} \
             --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts} \
             --colors {input.colors} \
             --auspice-config {input.auspice_config} \
-            --output-tree {output.auspice_tree} \
-            --output-meta {output.auspice_meta}
+            --output {output.auspice} \
+            --include-root-sequence-inline
         """

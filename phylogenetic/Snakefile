@@ -12,8 +12,7 @@ SEGMENTS = ["l", "s"]
 
 rule all:
     input:
-        auspice_tree = expand("auspice/lassa_{segment}_tree.json", segment=SEGMENTS),
-        auspice_meta = expand("auspice/lassa_{segment}_meta.json", segment=SEGMENTS)
+        auspice_tree = expand("auspice/lassa_{segment}.json", segment=SEGMENTS)
 
 include: "rules/prepare_sequences.smk"
 include: "rules/construct_phylogeny.smk"
