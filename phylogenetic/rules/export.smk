@@ -25,6 +25,22 @@ This part of the workflow usually includes the following steps:
 See Augur's usage docs for these commands for more details.
 """
 
+rule colors:
+    input:
+        color_schemes = "defaults/color_schemes.tsv",
+        color_orderings = "defaults/color_orderings.tsv",
+        metadata = "data/metadata_{segment}.tsv",
+    output:
+        colors = "results/colors_{segment}.tsv"
+    shell:
+        """
+        python3 scripts/assign-colors.py \
+            --color-schemes {input.color_schemes} \
+            --ordering {input.color_orderings} \
+            --metadata {input.metadata} \
+            --output {output.colors}
+        """
+
 rule export:
     """Exporting data files for for auspice"""
     input:
@@ -34,7 +50,7 @@ rule export:
         traits = "results/traits_{segment}.json",
         nt_muts = "results/nt_muts_{segment}.json",
         aa_muts = "results/aa_muts_{segment}.json",
-        colors = config['export']['colors'],
+        colors = "results/colors_{segment}.tsv",
         description = config['export']['description'],
         auspice_config = config['export']['auspice_config'],
     output:

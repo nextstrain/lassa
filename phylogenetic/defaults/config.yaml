@@ -32,5 +32,4 @@ traits:
 
 export:
   auspice_config: "defaults/auspice_config.json"
-  colors: "defaults/colors.tsv"
   description: "defaults/description.md"
