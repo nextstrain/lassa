@@ -10,6 +10,7 @@ sequences_url: "https://data.nextstrain.org/files/workflows/lassa/{segment}/sequ
 metadata_url: "https://data.nextstrain.org/files/workflows/lassa/{segment}/metadata.tsv.zst"
 
 strain_id_field: "accession"
+display_strain_field: "strain"
 
 filter:
   exclude: "defaults/dropped_strains.txt"

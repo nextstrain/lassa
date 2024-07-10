@@ -54,7 +54,7 @@ rule export:
         description = config['export']['description'],
         auspice_config = config['export']['auspice_config'],
     output:
-        auspice = "auspice/lassa_{segment}.json",
+        auspice = "results/lassa_{segment}.json",
     params:
         strain_id_field = config["strain_id_field"],
     shell:
@@ -69,4 +69,23 @@ rule export:
             --auspice-config {input.auspice_config} \
             --output {output.auspice} \
             --include-root-sequence-inline
+        """
+
+rule final_strain_name:
+    input:
+        auspice_json="results/lassa_{segment}.json",
+        metadata="data/metadata_{segment}.tsv",
+    output:
+        auspice_json="auspice/lassa_{segment}.json",
+    params:
+        strain_id_field=config["strain_id_field"],
+        display_strain_field=config["display_strain_field"],
+    shell:
+        """
+        python3 scripts/set_final_strain_name.py \
+            --metadata {input.metadata} \
+            --metadata-id-columns {params.strain_id_field} \
+            --input-auspice-json {input.auspice_json} \
+            --display-strain-name {params.display_strain_field} \
+            --output {output.auspice_json}
         """
