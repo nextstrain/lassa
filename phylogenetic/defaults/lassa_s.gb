@@ -1,7 +1,7 @@
-LOCUS       GU481068                3377 bp    RNA     linear   VRL 07-MAR-2011
+LOCUS       GU481068_REF                3377 bp    RNA     linear   VRL 07-MAR-2011
 DEFINITION  Lassa virus strain Nig08_04 glycoprotein precursor (GPC) and
             nucleoprotein (NP) genes, complete cds.
-ACCESSION   GU481068
+ACCESSION   GU481068_REF
 VERSION     GU481068.1
 KEYWORDS    .
 SOURCE      Lassa mammarenavirus
