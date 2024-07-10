@@ -74,12 +74,14 @@ rule traits:
     output:
         node_data = "results/traits_{segment}.json",
     params:
+        strain_id_field = config["strain_id_field"],
         columns = config['traits']['columns']
     shell:
         """
         augur traits \
             --tree {input.tree} \
             --metadata {input.metadata} \
+            --metadata-id-columns {params.strain_id_field} \
             --output-node-data {output.node_data} \
             --columns {params.columns} \
             --confidence

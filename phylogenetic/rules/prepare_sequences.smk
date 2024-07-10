@@ -62,6 +62,7 @@ rule filter:
     output:
         sequences = "results/filtered_{segment}.fasta"
     params:
+        strain_id_field = config["strain_id_field"],
         group_by = config['filter']['group_by'],
         sequences_per_group = config['filter']['sequences_per_group'],
     shell:
@@ -69,6 +70,7 @@ rule filter:
         augur filter \
             --sequences {input.sequences} \
             --metadata {input.metadata} \
+            --metadata-id-columns {params.strain_id_field} \
             --exclude {input.exclude} \
             --output {output.sequences} \
             --group-by {params.group_by} \
@@ -91,5 +93,6 @@ rule align:
             --sequences {input.sequences} \
             --reference-sequence {input.reference} \
             --output {output.alignment} \
-            --fill-gaps
+            --fill-gaps \
+            --remove-reference
         """

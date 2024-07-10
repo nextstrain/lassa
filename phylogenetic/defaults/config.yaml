@@ -9,6 +9,8 @@
 sequences_url: "https://data.nextstrain.org/files/workflows/lassa/{segment}/sequences.fasta.zst"
 metadata_url: "https://data.nextstrain.org/files/workflows/lassa/{segment}/metadata.tsv.zst"
 
+strain_id_field: "accession"
+
 filter:
   exclude: "defaults/dropped_strains.txt"
   group_by: "country year"

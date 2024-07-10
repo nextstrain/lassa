@@ -39,11 +39,14 @@ rule export:
         auspice_config = config['export']['auspice_config'],
     output:
         auspice = "auspice/lassa_{segment}.json",
+    params:
+        strain_id_field = config["strain_id_field"],
     shell:
         """
         augur export v2 \
             --tree {input.tree} \
             --metadata {input.metadata} \
+            --metadata-id-columns {params.strain_id_field} \
             --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts} \
             --colors {input.colors} \
             --description {input.description} \

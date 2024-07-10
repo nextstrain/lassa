@@ -51,6 +51,7 @@ rule refine:
         tree = "results/tree_{segment}.nwk",
         node_data = "results/branch_lengths_{segment}.json"
     params:
+        strain_id_field = config["strain_id_field"],
         coalescent = config['refine']['coalescent'],
         date_inference = config['refine']['date_inference'],
         clock_rate = config['refine']['clock_rate'],
@@ -60,6 +61,7 @@ rule refine:
             --tree {input.tree} \
             --alignment {input.alignment} \
             --metadata {input.metadata} \
+            --metadata-id-columns {params.strain_id_field} \
             --output-tree {output.tree} \
             --output-node-data {output.node_data} \
             --timetree \
