@@ -31,9 +31,8 @@
   "geo_resolutions": [
     "country"
   ],
-  "maintainer": [
-    "ACEGID Redeemer's University",
-    "http://acegid.org/"
+  "maintainers": [
+    {"name": "the Nextstrain team", "url": "https://nextstrain.org/team"}
   ],
   "filters": [
     "country",
