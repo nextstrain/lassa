@@ -19,5 +19,3 @@ files_to_upload:
   ncbi.ndjson.zst: data/ncbi.ndjson
   metadata.tsv.zst: results/metadata.tsv
   sequences.fasta.zst: results/sequences.fasta
-  alignments.fasta.zst: results/alignment.fasta
-  translations.zip: results/translations.zip
