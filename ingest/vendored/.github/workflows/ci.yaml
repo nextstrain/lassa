@@ -13,11 +13,3 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: nextstrain/.github/actions/shellcheck@master
-
-  cram:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-      - run: pip install cram
-      - run: cram tests/
