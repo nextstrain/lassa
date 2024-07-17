@@ -66,6 +66,8 @@ curate:
   strain_backup_fields: ["accession"]
   # List of date fields to standardize to ISO format YYYY-MM-DD
   date_fields: ["date", "date_released", "date_updated"]
+  # The expected field that contains the GenBank geo_loc_name
+  genbank_location_field: location
   # List of expected date formats that are present in the date fields provided above
   # These date formats should use directives expected by datetime
   # See https://docs.python.org/3.9/library/datetime.html#strftime-and-strptime-format-codes
