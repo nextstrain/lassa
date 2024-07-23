@@ -62,7 +62,7 @@ rule curate:
         annotations=config["curate"]["annotations"],
     output:
         metadata="data/all_metadata.tsv",
-        sequences="results/sequences.fasta",
+        sequences="results/sequences_all.fasta",
     log:
         "logs/curate.txt",
     benchmark:
