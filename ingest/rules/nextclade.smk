@@ -5,7 +5,7 @@ and sequences to split the sequences into L and S segments.
 REQUIRED INPUTS:
 
     metadata    = data/subset_metadata.tsv
-    sequences   = "results/sequences_all.fasta"
+    sequences   = results/sequences_all.fasta
 
 OUTPUTS:
 
