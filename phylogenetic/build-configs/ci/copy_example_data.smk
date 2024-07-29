@@ -3,8 +3,8 @@ rule copy_example_data:
         sequences="example_data/sequences_{segment}.fasta",
         metadata="example_data/metadata_{segment}.tsv",
     output:
-        sequences="data/sequences_{segment}.fasta",
-        metadata="data/metadata_{segment}.tsv",
+        sequences="data/{segment}/sequences.fasta",
+        metadata="data/{segment}/metadata.tsv",
     shell:
         """
         cp -f {input.sequences} {output.sequences}

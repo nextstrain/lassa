@@ -29,9 +29,9 @@ rule colors:
     input:
         color_schemes = "defaults/color_schemes.tsv",
         color_orderings = "defaults/color_orderings.tsv",
-        metadata = "data/metadata_{segment}.tsv",
+        metadata = "data/{segment}/metadata.tsv",
     output:
-        colors = "results/colors_{segment}.tsv"
+        colors = "results/{segment}/colors.tsv"
     shell:
         """
         python3 scripts/assign-colors.py \
@@ -44,17 +44,17 @@ rule colors:
 rule export:
     """Exporting data files for for auspice"""
     input:
-        tree = "results/tree_{segment}.nwk",
-        metadata = "data/metadata_{segment}.tsv",
-        branch_lengths = "results/branch_lengths_{segment}.json",
-        traits = "results/traits_{segment}.json",
-        nt_muts = "results/nt_muts_{segment}.json",
-        aa_muts = "results/aa_muts_{segment}.json",
-        colors = "results/colors_{segment}.tsv",
+        tree = "results/{segment}/tree.nwk",
+        metadata = "data/{segment}/metadata.tsv",
+        branch_lengths = "results/{segment}/branch_lengths.json",
+        traits = "results/{segment}/traits.json",
+        nt_muts = "results/{segment}/nt_muts.json",
+        aa_muts = "results/{segment}/aa_muts.json",
+        colors = "results/{segment}/colors.tsv",
         description = config['export']['description'],
         auspice_config = config['export']['auspice_config'],
     output:
-        auspice = "results/lassa_{segment}.json",
+        auspice = "results/{segment}/lassa.json",
     params:
         strain_id_field = config["strain_id_field"],
     shell:
@@ -73,8 +73,8 @@ rule export:
 
 rule final_strain_name:
     input:
-        auspice_json="results/lassa_{segment}.json",
-        metadata="data/metadata_{segment}.tsv",
+        auspice_json="results/{segment}/lassa.json",
+        metadata="data/{segment}/metadata.tsv",
     output:
         auspice_json="auspice/lassa_{segment}.json",
     params:

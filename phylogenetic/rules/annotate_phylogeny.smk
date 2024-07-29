@@ -34,10 +34,10 @@ to the ones produced by Augur commands.
 rule ancestral:
     """Reconstructing ancestral sequences and mutations"""
     input:
-        tree = "results/tree_{segment}.nwk",
-        alignment = "results/aligned_{segment}.fasta",
+        tree = "results/{segment}/tree.nwk",
+        alignment = "results/{segment}/aligned.fasta",
     output:
-        node_data = "results/nt_muts_{segment}.json"
+        node_data = "results/{segment}/nt_muts.json"
     params:
         inference = "joint"
     shell:
@@ -52,11 +52,11 @@ rule ancestral:
 rule translate:
     """Translating amino acid sequences"""
     input:
-        tree = "results/tree_{segment}.nwk",
-        node_data = "results/nt_muts_{segment}.json",
+        tree = "results/{segment}/tree.nwk",
+        node_data = "results/{segment}/nt_muts.json",
         reference = "defaults/lassa_{segment}.gb"
     output:
-        node_data = "results/aa_muts_{segment}.json"
+        node_data = "results/{segment}/aa_muts.json"
     shell:
         """
         augur translate \
@@ -69,10 +69,10 @@ rule translate:
 rule traits:
     """Inferring ancestral traits for {params.columns!s}"""
     input:
-        tree = "results/tree_{segment}.nwk",
-        metadata = "data/metadata_{segment}.tsv",
+        tree = "results/{segment}/tree.nwk",
+        metadata = "data/{segment}/metadata.tsv",
     output:
-        node_data = "results/traits_{segment}.json",
+        node_data = "results/{segment}/traits.json",
     params:
         strain_id_field = config["strain_id_field"],
         columns = config['traits']['columns']

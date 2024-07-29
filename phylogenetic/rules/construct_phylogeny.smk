@@ -22,9 +22,9 @@ See Augur's usage docs for these commands for more details.
 rule tree:
     """Building tree"""
     input:
-        alignment = "results/aligned_{segment}.fasta"
+        alignment = "results/{segment}/aligned.fasta"
     output:
-        tree = "results/tree_raw_{segment}.nwk"
+        tree = "results/{segment}/tree_raw.nwk"
     params:
         method = "iqtree"
     shell:
@@ -44,12 +44,12 @@ rule refine:
       - fix clock rate at {params.clock_rate}
     """
     input:
-        tree = "results/tree_raw_{segment}.nwk",
-        alignment = "results/aligned_{segment}.fasta",
-        metadata = "data/metadata_{segment}.tsv",
+        tree = "results/{segment}/tree_raw.nwk",
+        alignment = "results/{segment}/aligned.fasta",
+        metadata = "data/{segment}/metadata.tsv",
     output:
-        tree = "results/tree_{segment}.nwk",
-        node_data = "results/branch_lengths_{segment}.json"
+        tree = "results/{segment}/tree.nwk",
+        node_data = "results/{segment}/branch_lengths.json"
     params:
         strain_id_field = config["strain_id_field"],
         coalescent = config['refine']['coalescent'],
