@@ -8,7 +8,7 @@ REQUIRED INPUTS:
 OUTPUTS:
 
     metadata    = data/subset_metadata.tsv
-    seuqences   = results/sequences.fasta
+    sequences   = results/all/sequences.fasta
 
 """
 
@@ -62,7 +62,7 @@ rule curate:
         annotations=config["curate"]["annotations"],
     output:
         metadata="data/all_metadata.tsv",
-        sequences="results/sequences_all.fasta",
+        sequences="results/all/sequences.fasta",
     log:
         "logs/curate.txt",
     benchmark:
@@ -121,11 +121,11 @@ rule subset_metadata:
     input:
         metadata="data/all_metadata.tsv",
     output:
-        subset_metadata="data/subset_metadata.tsv",
+        metadata="data/subset_metadata.tsv",
     params:
         metadata_fields=",".join(config["curate"]["metadata_columns"]),
     shell:
         """
         tsv-select -H -f {params.metadata_fields} \
-            {input.metadata} > {output.subset_metadata}
+            {input.metadata} > {output.metadata}
         """

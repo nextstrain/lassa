@@ -22,9 +22,9 @@ wildcard_constraints:
 # TODO: Add link to centralized docs on standard Nextstrain metadata fields
 rule all:
     input:
-        sequences=expand("results/sequences_{segment}.fasta", segment=segments),
-        metadata=expand("results/metadata_{segment}.tsv", segment=segments),
-        metadata_all="results/metadata_all.tsv",
+        sequences=expand("results/{segment}/sequences.fasta", segment=segments),
+        metadata=expand("results/{segment}/metadata.tsv", segment=segments),
+        metadata_all="results/all/metadata.tsv",
 
 
 # Note that only PATHOGEN-level customizations should be added to these
@@ -40,10 +40,10 @@ rule create_final_metadata:
     input:
         metadata="data/subset_metadata.tsv"
     output:
-        metadata="results/metadata_all.tsv"
+        metadata="results/all/metadata.tsv"
     shell:
         """
-        mv {input.metadata} {output.metadata}
+        cp {input.metadata} {output.metadata}
         """
 
 # Allow users to import custom rules provided via the config.
