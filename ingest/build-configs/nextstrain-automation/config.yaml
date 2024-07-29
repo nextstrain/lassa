@@ -17,5 +17,9 @@ s3_dst: "s3://nextstrain-data/files/workflows/lassa"
 # Mapping of files to upload
 files_to_upload:
   ncbi.ndjson.zst: data/ncbi.ndjson
-  metadata.tsv.zst: results/metadata.tsv
-  sequences.fasta.zst: results/sequences.fasta
+  all/metadata.tsv.zst: results/all/metadata.tsv
+  all/sequences.fasta.zst: results/all/sequences.fasta
+  L/metadata.tsv.zst: results/L/metadata.tsv
+  L/sequences.fasta.zst: results/L/sequences.fasta
+  S/metadata.tsv.zst: results/S/metadata.tsv
+  S/sequences.fasta.zst: results/S/sequences.fasta

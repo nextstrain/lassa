@@ -116,3 +116,7 @@ curate:
     "abbr_authors",
     "institution",
   ]
+
+nextclade:
+  segment_reference: "../shared/lassa_{segment}.fasta"
+  min_seed_cover: 0.01

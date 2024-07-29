@@ -8,6 +8,11 @@ workdir: workflow.current_basedir
 # Use default configuration values. Override with Snakemake's --configfile/--config options.
 configfile: "defaults/config.yaml"
 
+segments = ['L', 'S']
+
+wildcard_constraints:
+    segment = "|".join(segments)
+
 # This is the default rule that Snakemake will run when there are no specified targets.
 # The default output of the ingest workflow is usually the curated metadata and sequences.
 # Nextstrain-maintained ingest workflows will produce metadata files with the
@@ -17,8 +22,9 @@ configfile: "defaults/config.yaml"
 # TODO: Add link to centralized docs on standard Nextstrain metadata fields
 rule all:
     input:
-        "results/sequences.fasta",
-        "results/metadata.tsv",
+        sequences=expand("results/{segment}/sequences.fasta", segment=segments),
+        metadata=expand("results/{segment}/metadata.tsv", segment=segments),
+        metadata_all="results/all/metadata.tsv",
 
 
 # Note that only PATHOGEN-level customizations should be added to these
@@ -28,15 +34,16 @@ rule all:
 # by build-specific rules.
 include: "rules/fetch_from_ncbi.smk"
 include: "rules/curate.smk"
+include: "rules/nextclade.smk"
 
 rule create_final_metadata:
     input:
         metadata="data/subset_metadata.tsv"
     output:
-        metadata="results/metadata.tsv"
+        metadata="results/all/metadata.tsv"
     shell:
         """
-        mv {input.metadata} {output.metadata}
+        cp {input.metadata} {output.metadata}
         """
 
 # Allow users to import custom rules provided via the config.
