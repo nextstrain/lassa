@@ -6,9 +6,9 @@ The Irrua Specialist Teaching Hospital (ISTH) and Institute for Lassa Fever Rese
 
 We curate sequence data and metadata from NCBI as the starting point for our analyses. Curated sequences and metadata are available as flat files at:
 
-* [data.nextstrain.org/files/workflows/lassa/L/sequences.fasta.zst](https://data.nextstrain.org/files/workflows/lassa/L/sequences.fasta.zst)
-* [data.nextstrain.org/files/workflows/lassa/L/metadata.tsv.zst](https://data.nextstrain.org/files/workflows/lassa/L/metadata.tsv.zst)
-* [data.nextstrain.org/files/workflows/lassa/S/sequences.fasta.zst](https://data.nextstrain.org/files/workflows/lassa/S/sequences.fasta.zst)
-* [data.nextstrain.org/files/workflows/lassa/S/metadata.tsv.zst](https://data.nextstrain.org/files/workflows/lassa/S/metadata.tsv.zst)
+* [data.nextstrain.org/files/workflows/lassa/l/sequences.fasta.zst](https://data.nextstrain.org/files/workflows/lassa/l/sequences.fasta.zst)
+* [data.nextstrain.org/files/workflows/lassa/l/metadata.tsv.zst](https://data.nextstrain.org/files/workflows/lassa/l/metadata.tsv.zst)
+* [data.nextstrain.org/files/workflows/lassa/s/sequences.fasta.zst](https://data.nextstrain.org/files/workflows/lassa/s/sequences.fasta.zst)
+* [data.nextstrain.org/files/workflows/lassa/s/metadata.tsv.zst](https://data.nextstrain.org/files/workflows/lassa/s/metadata.tsv.zst)
 * [data.nextstrain.org/files/workflows/lassa/all/sequences.fasta.zst](https://data.nextstrain.org/files/workflows/lassa/all/sequences.fasta.zst)
 * [data.nextstrain.org/files/workflows/lassa/all/metadata.tsv.zst](https://data.nextstrain.org/files/workflows/lassa/all/metadata.tsv.zst)
