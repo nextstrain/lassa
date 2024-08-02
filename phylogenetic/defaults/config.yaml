@@ -1,0 +1,35 @@
+# This configuration file should contain all required configuration parameters
+# for the phylogenetic workflow to run to completion.
+#
+# Define optional config parameters with their default values here so that users
+# do not have to dig through the workflows to figure out the default values
+
+# Sequences must be FASTA and metadata must be TSV
+# Both files must be zstd compressed
+sequences_url: "https://data.nextstrain.org/files/workflows/lassa/{segment}/sequences.fasta.zst"
+metadata_url: "https://data.nextstrain.org/files/workflows/lassa/{segment}/metadata.tsv.zst"
+
+strain_id_field: "accession"
+display_strain_field: "strain"
+
+filter:
+  min_length: 500
+  exclude: "defaults/dropped_strains.txt"
+
+tree:
+  method: "iqtree"
+
+refine:
+  coalescent: "opt"
+  date_inference: "marginal"
+  clock_rate: 0.0006
+
+ancestral:
+  inference: "joint"
+
+traits:
+  columns: "country"
+
+export:
+  auspice_config: "defaults/auspice_config.json"
+  description: "defaults/description.md"

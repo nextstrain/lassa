@@ -19,7 +19,7 @@ files_to_upload:
   ncbi.ndjson.zst: data/ncbi.ndjson
   all/metadata.tsv.zst: results/all/metadata.tsv
   all/sequences.fasta.zst: results/all/sequences.fasta
-  L/metadata.tsv.zst: results/L/metadata.tsv
-  L/sequences.fasta.zst: results/L/sequences.fasta
-  S/metadata.tsv.zst: results/S/metadata.tsv
-  S/sequences.fasta.zst: results/S/sequences.fasta
+  l/metadata.tsv.zst: results/l/metadata.tsv
+  l/sequences.fasta.zst: results/l/sequences.fasta
+  s/metadata.tsv.zst: results/s/metadata.tsv
+  s/sequences.fasta.zst: results/s/sequences.fasta

@@ -1,0 +1,14 @@
+We gratefully acknowledge the authors, originating and submitting laboratories of the genetic sequences and metadata for sharing their work. Please note that although data generators have generously shared data in an open fashion, that does not mean there should be free license to publish on this data. Data generators should be cited where possible and collaborations should be sought in some circumstances. Please try to avoid scooping someone else's work. Reach out if uncertain.
+
+This work is made possible by the open sharing of genetic data by research groups, including these groups currently collecting Lassa sequences: [Christian Happi](http://acegid.org/), [Pardis Sabeti](https://www.sabetilab.org/), [Katherine Siddle](https://www.sabetilab.org/katherine-siddle/) and colleagues, whose data was shared via [this virological.org post](http://virological.org/t/new-lassa-virus-genomes-from-nigeria-2015-2016/191). If you intend to use these sequences prior to publication, please contact them directly to coordinate.
+
+The Irrua Specialist Teaching Hospital (ISTH) and Institute for Lassa Fever Research and Control (ILFRC), Irrua, Edo State, Nigeria; The Bernhard-Nocht Institute for Tropical Medicine (BNITM), Hamburg, Germany; Public Health England (PHE); African Center of Excellence for Genomics of Infectious Disease (ACEGID), Redeemer’s University, Ede, Nigeria; Broad Institute of MIT and Harvard University, Cambridge, MA, USA. For further details, including conditions of reuse, please contact [Ephraim Epogbaini](mailto:epogbaini@yahoo.com), [Stephan Günther](http://www.who.int/blueprint/about/stephan-gunther/en/), and [Philippe Lemey](https://rega.kuleuven.be/cev/ecv/lab-members/PhilippeLemey.html). Their data was first shared via [this virological.org post](http://virological.org/t/2018-lasv-sequencing-continued/192/8), which is continually updated.
+
+We curate sequence data and metadata from NCBI as the starting point for our analyses. Curated sequences and metadata are available as flat files at:
+
+* [data.nextstrain.org/files/workflows/lassa/l/sequences.fasta.zst](https://data.nextstrain.org/files/workflows/lassa/l/sequences.fasta.zst)
+* [data.nextstrain.org/files/workflows/lassa/l/metadata.tsv.zst](https://data.nextstrain.org/files/workflows/lassa/l/metadata.tsv.zst)
+* [data.nextstrain.org/files/workflows/lassa/s/sequences.fasta.zst](https://data.nextstrain.org/files/workflows/lassa/s/sequences.fasta.zst)
+* [data.nextstrain.org/files/workflows/lassa/s/metadata.tsv.zst](https://data.nextstrain.org/files/workflows/lassa/s/metadata.tsv.zst)
+* [data.nextstrain.org/files/workflows/lassa/all/sequences.fasta.zst](https://data.nextstrain.org/files/workflows/lassa/all/sequences.fasta.zst)
+* [data.nextstrain.org/files/workflows/lassa/all/metadata.tsv.zst](https://data.nextstrain.org/files/workflows/lassa/all/metadata.tsv.zst)

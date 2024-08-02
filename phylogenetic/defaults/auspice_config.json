@@ -1,0 +1,44 @@
+{
+  "title": "Real-time tracking of Lassa virus evolution",
+  "data_provenance": [
+    {
+      "name": "GenBank",
+      "url": "https://www.ncbi.nlm.nih.gov/genbank/"
+    }
+  ],
+  "colorings": [
+    {
+      "key": "gt",
+      "title": "Genotype",
+      "type": "categorical"
+    },
+    {
+      "key": "num_date",
+      "title": "Date",
+      "type": "continuous"
+    },
+    {
+      "key": "author",
+      "title": "Author",
+      "type": "categorical"
+    },
+    {
+      "key": "country",
+      "title": "Country",
+      "type": "categorical"
+    }
+  ],
+  "geo_resolutions": [
+    "country"
+  ],
+  "maintainers": [
+    {"name": "the Nextstrain team", "url": "https://nextstrain.org/team"}
+  ],
+  "filters": [
+    "country",
+    "author"
+  ],
+  "metadata_columns": [
+    "genbank_accession"
+  ]
+}

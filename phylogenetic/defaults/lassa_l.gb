@@ -1,7 +1,7 @@
-LOCUS       KM822127                7272 bp    RNA     linear   VRL 14-OCT-2014
+LOCUS       KM822127_REF                7272 bp    RNA     linear   VRL 14-OCT-2014
 DEFINITION  Lassa virus strain Pinneo-NIG-1969 segment L Z protein (Z) and
             polymerase (L) genes, complete cds.
-ACCESSION   KM822127
+ACCESSION   KM822127_REF
 VERSION     KM822127.1
 DBLINK      BioProject: PRJNA254017
 KEYWORDS    .
