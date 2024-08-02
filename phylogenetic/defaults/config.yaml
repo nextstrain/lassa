@@ -13,9 +13,8 @@ strain_id_field: "accession"
 display_strain_field: "strain"
 
 filter:
+  min_length: 500
   exclude: "defaults/dropped_strains.txt"
-  group_by: "country year"
-  sequences_per_group: 2
 
 tree:
   method: "iqtree"

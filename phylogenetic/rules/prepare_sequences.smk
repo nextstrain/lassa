@@ -63,18 +63,17 @@ rule filter:
         sequences = "results/{segment}/filtered.fasta"
     params:
         strain_id_field = config["strain_id_field"],
-        group_by = config['filter']['group_by'],
-        sequences_per_group = config['filter']['sequences_per_group'],
+        min_length = config['filter']['min_length'],
+        exclude = config['filter']['exclude']
     shell:
         """
         augur filter \
             --sequences {input.sequences} \
             --metadata {input.metadata} \
             --metadata-id-columns {params.strain_id_field} \
-            --exclude {input.exclude} \
             --output {output.sequences} \
-            --group-by {params.group_by} \
-            --sequences-per-group {params.sequences_per_group}
+            --min-length {params.min_length} \
+            --exclude {input.exclude}
         """
 
 rule align:
