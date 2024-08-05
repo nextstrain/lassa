@@ -18,7 +18,7 @@
       "type": "continuous"
     },
     {
-      "key": "author",
+      "key": "abbr_authors",
       "title": "Author",
       "type": "categorical"
     },
@@ -41,7 +41,7 @@
   ],
   "filters": [
     "country",
-    "author",
+    "abbr_authors",
     "host"
   ],
   "metadata_columns": [
