@@ -14,7 +14,7 @@ display_strain_field: "strain"
 
 filter:
   min_length: 500
-  exclude: "defaults/dropped_strains.txt"
+  exclude: "defaults/exclude.txt"
 
 tree:
   method: "iqtree"
