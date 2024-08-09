@@ -18,13 +18,18 @@
       "type": "continuous"
     },
     {
-      "key": "author",
+      "key": "abbr_authors",
       "title": "Author",
       "type": "categorical"
     },
     {
       "key": "country",
       "title": "Country",
+      "type": "categorical"
+    },
+    {
+      "key": "host",
+      "title": "Host",
       "type": "categorical"
     }
   ],
@@ -36,7 +41,8 @@
   ],
   "filters": [
     "country",
-    "author"
+    "abbr_authors",
+    "host"
   ],
   "metadata_columns": [
     "genbank_accession"
