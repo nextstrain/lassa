@@ -1,7 +1,7 @@
-LOCUS       NC_004296               3402 bp ss-RNA     linear   VRL 13-AUG-2018
+LOCUS       NC_004296_REF               3402 bp ss-RNA     linear   VRL 13-AUG-2018
 DEFINITION  Lassa virus segment S, complete sequence.
-ACCESSION   NC_004296
-VERSION     NC_004296.1
+ACCESSION   NC_004296_REF
+VERSION     NC_004296_REF.1
 DBLINK      BioProject: PRJNA485481
 KEYWORDS    RefSeq.
 SOURCE      Mammarenavirus lassaense
@@ -36,10 +36,12 @@ FEATURES             Location/Qualifiers
      repeat_region   1..19
                      /note="5' conserved complimentary terminus"
      gene            101..1810
-                     /locus_tag="LASVsSgp1"
+                     /gene="NP"
+                     /locus_tag="NP"
                      /db_xref="GeneID:956584"
      CDS             101..1810
-                     /locus_tag="LASVsSgp1"
+                     /gene="NP"
+                     /locus_tag="NP"
                      /codon_start=1
                      /product="nucleoprotein"
                      /protein_id="NP_694869.1"
@@ -58,10 +60,12 @@ FEATURES             Location/Qualifiers
      misc_feature    1817..1857
                      /note="hairpin intergenic region"
      gene            complement(1872..3347)
-                     /locus_tag="LASVsSgp2"
+                     /gene="GPC"
+                     /locus_tag="GPC"
                      /db_xref="GeneID:956585"
      CDS             complement(1872..3347)
-                     /locus_tag="LASVsSgp2"
+                     /gene="GPC"
+                     /locus_tag="GPC"
                      /codon_start=1
                      /product="glycoprotein"
                      /protein_id="NP_694870.1"

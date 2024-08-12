@@ -1,7 +1,7 @@
-LOCUS       NC_004297               7279 bp ss-RNA     linear   VRL 13-AUG-2018
+LOCUS       NC_004297_REF               7279 bp ss-RNA     linear   VRL 13-AUG-2018
 DEFINITION  Lassa virus segment L, complete sequence.
-ACCESSION   NC_004297
-VERSION     NC_004297.1
+ACCESSION   NC_004297_REF
+VERSION     NC_004297_REF.1
 DBLINK      BioProject: PRJNA485481
 KEYWORDS    RefSeq.
 SOURCE      Mammarenavirus lassaense
@@ -45,10 +45,12 @@ FEATURES             Location/Qualifiers
                      /db_xref="taxon:3052310"
                      /segment="L"
      gene            66..365
-                     /locus_tag="LASVsLgp1"
+                     /gene="Z"
+                     /locus_tag="Z"
                      /db_xref="GeneID:956586"
      CDS             66..365
-                     /locus_tag="LASVsLgp1"
+                     /gene="Z"
+                     /locus_tag="Z"
                      /note="ring finger protein"
                      /codon_start=1
                      /product="Z protein"
@@ -57,10 +59,12 @@ FEATURES             Location/Qualifiers
                      /translation="MGNKQAKAPESKDSPRASLIPDATHLGPQFCKSCWFENKGLVEC
                      NNHYLCLNCLTLLLSVSNRCPICKMPLPTKLRPSAAPTAPPTGAADSIRPPPYSP"
      gene            complement(466..7122)
-                     /locus_tag="LASVsLgp2"
+                     /gene="L"
+                     /locus_tag="L"
                      /db_xref="GeneID:956587"
      CDS             complement(466..7122)
-                     /locus_tag="LASVsLgp2"
+                     /gene="L"
+                     /locus_tag="L"
                      /note="L polymerase"
                      /codon_start=1
                      /product="L protein"
