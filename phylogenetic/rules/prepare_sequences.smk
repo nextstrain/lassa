@@ -64,7 +64,9 @@ rule filter:
     params:
         strain_id_field = config["strain_id_field"],
         min_length = config['filter']['min_length'],
-        exclude = config['filter']['exclude']
+        exclude = config['filter']['exclude'],
+        query = config['filter']['query'],
+        custom_params = config['filter']['custom_params'],
     shell:
         """
         augur filter \
@@ -73,7 +75,9 @@ rule filter:
             --metadata-id-columns {params.strain_id_field} \
             --output {output.sequences} \
             --min-length {params.min_length} \
-            --exclude {input.exclude}
+            --exclude {input.exclude} \
+            --query "{params.query}" \
+            {params.custom_params}
         """
 
 rule align:
