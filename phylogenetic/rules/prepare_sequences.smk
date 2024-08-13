@@ -64,7 +64,6 @@ rule filter:
     params:
         strain_id_field = config["strain_id_field"],
         min_length = config['filter']['min_length'],
-        exclude = config['filter']['exclude'],
         query = config['filter']['query'],
         custom_params = config['filter']['custom_params'],
     shell:
