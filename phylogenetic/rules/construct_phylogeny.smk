@@ -25,6 +25,10 @@ rule tree:
         alignment = "results/{segment}/aligned.fasta"
     output:
         tree = "results/{segment}/tree_raw.nwk"
+    log:
+        "logs/{segment}/tree.txt",
+    benchmark:
+        "benchmarks/{segment}/tree.txt"
     params:
         method = "iqtree"
     shell:
@@ -32,7 +36,8 @@ rule tree:
         augur tree \
             --alignment {input.alignment} \
             --output {output.tree} \
-            --method {params.method}
+            --method {params.method} \
+            2>&1 | tee {log}
         """
 
 rule refine:
@@ -50,6 +55,10 @@ rule refine:
     output:
         tree = "results/{segment}/tree.nwk",
         node_data = "results/{segment}/branch_lengths.json"
+    log:
+        "logs/{segment}/refine.txt",
+    benchmark:
+        "benchmarks/{segment}/refine.txt"
     params:
         strain_id_field = config["strain_id_field"],
         coalescent = config['refine']['coalescent'],
@@ -70,5 +79,6 @@ rule refine:
             --clock-rate {params.clock_rate} \
             --date-confidence \
             --date-inference {params.date_inference} \
-            --root {params.root}
+            --root {params.root} \
+            2>&1 | tee {log}
         """
