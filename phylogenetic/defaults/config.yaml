@@ -15,6 +15,9 @@ display_strain_field: "strain"
 filter:
   min_length: 500
   exclude: "defaults/exclude.txt"
+  query: "is_lab_host != 'true'"
+  # Necessary for is_lab_host to be read as a string instaed of a boolean
+  custom_params: "--query-columns is_lab_host:str"
 
 tree:
   method: "iqtree"
