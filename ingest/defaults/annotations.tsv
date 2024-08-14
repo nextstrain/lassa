@@ -4,6 +4,10 @@
 # If there are multiple annotations for the same id and field, then the last value is used
 # Lines starting with '#' are treated as comments
 # Any '#' after the field value are treated as comments.
+LT601601	country	Togo # Alzey strain, described in https://journals.asm.org/doi/full/10.1128/genomea.00938-16
+LT601602	country	Togo # Acquired by funeral worker, but decreased was evacuated from Togo
+LT601601	region	Africa
+LT601602	region	Africa
 OR490691	strain	Ban-377
 OR490692	strain	Bri-08
 OR490693	strain	Dal-11
