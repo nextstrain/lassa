@@ -1,11 +1,16 @@
 {
   "title": "Real-time tracking of Lassa virus evolution",
+  "maintainers": [
+    { "name": "Jennifer Chang", "url": "https://bedford.io/team/jennifer-change/" },
+    { "name": "the Nextstrain team", "url": "https://nextstrain.org/team" }
+  ],
   "data_provenance": [
     {
       "name": "GenBank",
       "url": "https://www.ncbi.nlm.nih.gov/genbank/"
     }
   ],
+  "build_url": "https://github.com/nextstrain/lassa",
   "colorings": [
     {
       "key": "gt",
@@ -18,31 +23,39 @@
       "type": "continuous"
     },
     {
-      "key": "abbr_authors",
-      "title": "Author",
+      "key": "country",
+      "title": "Country",
       "type": "categorical"
     },
     {
-      "key": "country",
-      "title": "Country",
+      "key": "division",
+      "title": "Admin Division",
       "type": "categorical"
     },
     {
       "key": "host",
       "title": "Host",
       "type": "categorical"
+    },
+    {
+      "key": "abbr_authors",
+      "title": "Authors",
+      "type": "categorical"
     }
   ],
   "geo_resolutions": [
     "country"
   ],
-  "maintainers": [
-    {"name": "the Nextstrain team", "url": "https://nextstrain.org/team"}
-  ],
+  "display_defaults": {
+    "map_triplicate": false,
+    "color_by": "country",
+    "distance_measure": "div"
+  },
   "filters": [
     "country",
-    "abbr_authors",
-    "host"
+    "division",    
+    "host",
+    "abbr_authors"
   ],
   "metadata_columns": [
     "genbank_accession"
