@@ -26,6 +26,10 @@ refine:
   coalescent: "opt"
   date_inference: "marginal"
   clock_rate: 0.0006
+  # Root on earliest sequenced sample of lassa: 'Pinneo-NIG-1969'
+  root:
+    l: "KM822127"
+    s: "KM822128"
 
 ancestral:
   inference: "joint"
