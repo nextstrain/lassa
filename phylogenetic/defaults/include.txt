@@ -1,0 +1,4 @@
+KM822127 # Pinneo-NIG-1969 L segment
+KM822128 # Pinneo-NIG-1969 S segment
+MG812674 # 812285 L segment
+MG812675 # 812285 S segment

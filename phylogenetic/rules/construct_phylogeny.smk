@@ -55,6 +55,7 @@ rule refine:
         coalescent = config['refine']['coalescent'],
         date_inference = config['refine']['date_inference'],
         clock_rate = config['refine']['clock_rate'],
+        root = lambda wildcards: config['refine']['root'][wildcards.segment],
     shell:
         """
         augur refine \
@@ -68,5 +69,6 @@ rule refine:
             --coalescent {params.coalescent} \
             --clock-rate {params.clock_rate} \
             --date-confidence \
-            --date-inference {params.date_inference}
+            --date-inference {params.date_inference} \
+            --root {params.root}
         """

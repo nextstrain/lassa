@@ -14,6 +14,7 @@ display_strain_field: "strain"
 
 filter:
   min_length: 500
+  include: "defaults/include.txt" # need to always include root strains
   exclude: "defaults/exclude.txt"
   query: "is_lab_host != 'true'"
   # Necessary for is_lab_host to be read as a string instaed of a boolean
@@ -26,6 +27,13 @@ refine:
   coalescent: "opt"
   date_inference: "marginal"
   clock_rate: 0.0006
+  # Rooting to outgroup clade based on strains
+  # Pinneo-NIG-1969 (L accession KM822127 and S accession KM822128)
+  # and strain 812285 (L accession MG812674 and S accession MG812675)
+  # TreeTime needs two tips to root to common ancestor of these tips
+  root:
+    l: "KM822127 MG812674"
+    s: "KM822128 MG812675"
 
 ancestral:
   inference: "joint"
