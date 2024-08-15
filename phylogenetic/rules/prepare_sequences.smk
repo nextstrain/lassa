@@ -58,6 +58,7 @@ rule filter:
     input:
         sequences = "data/{segment}/sequences.fasta",
         metadata = "data/{segment}/metadata.tsv",
+        include = config['filter']['include'],
         exclude = config['filter']['exclude']
     output:
         sequences = "results/{segment}/filtered.fasta"
@@ -72,10 +73,11 @@ rule filter:
             --sequences {input.sequences} \
             --metadata {input.metadata} \
             --metadata-id-columns {params.strain_id_field} \
-            --output {output.sequences} \
-            --min-length {params.min_length} \
+            --include {input.include} \
             --exclude {input.exclude} \
+            --min-length {params.min_length} \
             --query "{params.query}" \
+            --output {output.sequences} \
             {params.custom_params}
         """
 
