@@ -1,7 +1,5 @@
 # nextstrain.org/lassa
 
-_Currently, this pathogen build is in draft state. Recent outputs are visible at [nextstrain.org/staging/lassa/l](https://nextstrain.org/staging/lassa/l) and [nextstrain.org/staging/lassa/s](https://nextstrain.org/staging/lassa/s), but it's not yet fully QCed or automated._
-
 This repository contains two workflows for the analysis of Lassa virus data:
 
 - [`ingest/`](./ingest) - Download data from GenBank, clean and curate it, separate into L and S segments, and upload it to S3
