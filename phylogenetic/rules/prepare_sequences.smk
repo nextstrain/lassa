@@ -62,6 +62,10 @@ rule filter:
         exclude = config['filter']['exclude']
     output:
         sequences = "results/{segment}/filtered.fasta"
+    log:
+        "logs/{segment}/filter.txt",
+    benchmark:
+        "benchmarks/{segment}/filter.txt"
     params:
         strain_id_field = config["strain_id_field"],
         min_length = config['filter']['min_length'],
@@ -78,7 +82,8 @@ rule filter:
             --min-length {params.min_length} \
             --query "{params.query}" \
             --output {output.sequences} \
-            {params.custom_params}
+            {params.custom_params} \
+            2>&1 | tee {log}
         """
 
 rule align:
@@ -91,6 +96,10 @@ rule align:
         reference = "defaults/lassa_{segment}.gb"
     output:
         alignment = "results/{segment}/aligned.fasta"
+    log:
+        "logs/{segment}/align.txt",
+    benchmark:
+        "benchmarks/{segment}/align.txt"
     shell:
         """
         augur align \
@@ -98,5 +107,6 @@ rule align:
             --reference-sequence {input.reference} \
             --output {output.alignment} \
             --fill-gaps \
-            --remove-reference
+            --remove-reference \
+            2>&1 | tee {log}
         """

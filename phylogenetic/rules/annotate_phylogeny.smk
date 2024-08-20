@@ -38,6 +38,10 @@ rule ancestral:
         alignment = "results/{segment}/aligned.fasta",
     output:
         node_data = "results/{segment}/nt_muts.json"
+    log:
+        "logs/{segment}/ancestral.txt",
+    benchmark:
+        "benchmarks/{segment}/ancestral.txt"
     params:
         inference = "joint"
     shell:
@@ -46,7 +50,8 @@ rule ancestral:
             --tree {input.tree} \
             --alignment {input.alignment} \
             --output-node-data {output.node_data} \
-            --inference {params.inference}
+            --inference {params.inference} \
+            2>&1 | tee {log}
         """
 
 rule translate:
@@ -57,13 +62,18 @@ rule translate:
         reference = "defaults/lassa_{segment}.gb"
     output:
         node_data = "results/{segment}/aa_muts.json"
+    log:
+        "logs/{segment}/translate.txt",
+    benchmark:
+        "benchmarks/{segment}/translate.txt"
     shell:
         """
         augur translate \
             --tree {input.tree} \
             --ancestral-sequences {input.node_data} \
             --reference-sequence {input.reference} \
-            --output-node-data {output.node_data}
+            --output-node-data {output.node_data} \
+            2>&1 | tee {log}
         """
 
 rule traits:
@@ -73,6 +83,10 @@ rule traits:
         metadata = "data/{segment}/metadata.tsv",
     output:
         node_data = "results/{segment}/traits.json",
+    log:
+        "logs/{segment}/traits.txt",
+    benchmark:
+        "benchmarks/{segment}/traits.txt"
     params:
         strain_id_field = config["strain_id_field"],
         columns = config['traits']['columns']
@@ -84,5 +98,6 @@ rule traits:
             --metadata-id-columns {params.strain_id_field} \
             --output-node-data {output.node_data} \
             --columns {params.columns} \
-            --confidence
+            --confidence \
+            2>&1 | tee {log}
         """

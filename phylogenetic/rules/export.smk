@@ -32,13 +32,18 @@ rule colors:
         metadata = "data/{segment}/metadata.tsv",
     output:
         colors = "results/{segment}/colors.tsv"
+    log:
+        "logs/{segment}/colors.txt",
+    benchmark:
+        "benchmarks/{segment}/colors.txt"
     shell:
         """
         python3 scripts/assign-colors.py \
             --color-schemes {input.color_schemes} \
             --ordering {input.color_orderings} \
             --metadata {input.metadata} \
-            --output {output.colors}
+            --output {output.colors} \
+            2>&1 | tee {log}
         """
 
 rule export:
@@ -55,6 +60,10 @@ rule export:
         auspice_config = config['export']['auspice_config'],
     output:
         auspice = "results/{segment}/lassa.json",
+    log:
+        "logs/{segment}/export.txt",
+    benchmark:
+        "benchmarks/{segment}/export.txt"
     params:
         strain_id_field = config["strain_id_field"],
     shell:
@@ -68,7 +77,8 @@ rule export:
             --description {input.description} \
             --auspice-config {input.auspice_config} \
             --output {output.auspice} \
-            --include-root-sequence-inline
+            --include-root-sequence-inline \
+            2>&1 | tee {log}
         """
 
 rule final_strain_name:
@@ -77,6 +87,10 @@ rule final_strain_name:
         metadata="data/{segment}/metadata.tsv",
     output:
         auspice_json="auspice/lassa_{segment}.json",
+    log:
+        "logs/{segment}/final_strain_name.txt",
+    benchmark:
+        "benchmarks/{segment}/final_strain_name.txt"
     params:
         strain_id_field=config["strain_id_field"],
         display_strain_field=config["display_strain_field"],
@@ -87,5 +101,6 @@ rule final_strain_name:
             --metadata-id-columns {params.strain_id_field} \
             --input-auspice-json {input.auspice_json} \
             --display-strain-name {params.display_strain_field} \
-            --output {output.auspice_json}
+            --output {output.auspice_json} \
+            2>&1 | tee {log}
         """
