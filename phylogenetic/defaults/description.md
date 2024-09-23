@@ -1,6 +1,6 @@
 We gratefully acknowledge the authors, originating and submitting laboratories of the genetic sequences and metadata for sharing their work.
 
-Special thanks to Richard Daudu and Laura McMullan for comments, code and suggestions.
+Special thanks to Richard Daodu and Laura McMullan for comments, code and suggestions.
 
 Please note that although data generators have generously shared data in an open fashion, that does not mean there should be free license to publish on this data. Data generators should be cited where possible and collaborations should be sought in some circumstances. Please try to avoid scooping someone else's work. Reach out if uncertain.
 
