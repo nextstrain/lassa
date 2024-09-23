@@ -68,7 +68,7 @@ rule filter:
         "benchmarks/{segment}/filter.txt"
     params:
         strain_id_field = config["strain_id_field"],
-        min_length = config['filter']['min_length'],
+        min_length = lambda wildcards: config['filter']['min_length'][wildcards.segment],
         query = config['filter']['query'],
         custom_params = config['filter']['custom_params'],
     shell:

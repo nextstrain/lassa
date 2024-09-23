@@ -13,7 +13,9 @@ strain_id_field: "accession"
 display_strain_field: "strain"
 
 filter:
-  min_length: 500
+  min_length:
+    l: 5000
+    s: 2000
   include: "defaults/include.txt" # need to always include root strains
   exclude: "defaults/exclude.txt"
   query: "is_lab_host != 'true'"
