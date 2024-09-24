@@ -23,3 +23,5 @@ files_to_upload:
   l/sequences.fasta.zst: results/l/sequences.fasta
   s/metadata.tsv.zst: results/s/metadata.tsv
   s/sequences.fasta.zst: results/s/sequences.fasta
+  gpc/metadata.tsv.zst: results/gpc/metadata.tsv
+  gpc/sequences.fasta.zst: results/gpc/sequences.fasta
