@@ -82,31 +82,76 @@ rule filter:
             --min-length {params.min_length} \
             --query "{params.query}" \
             --output {output.sequences} \
-            {params.custom_params} \
+           
             2>&1 | tee {log}
         """
+# {params.custom_params} \
+rule download_alignment:
+    """Download alignment only for GPC segment if it doesn't exist"""
+    output:
+        manual_curated_alignment = "data/manual_alignment.fasta"
+    log:
+        "logs/gpc/download_alignment.txt"
+    run:
+        # Only proceed if the file does not already exist
+        if not os.path.exists(output.manual_curated_alignment):
+            shell("""
+                wget https://raw.githubusercontent.com/JoiRichi/LASV_ML_manuscript_data/main/alignment_preprocessing/final_passed_sequences.fasta \
+                -O {output.manual_curated_alignment}
+            """)
+        else:
+            print("Manual curated alignment already exists.")
+
+
+    
+rule find_and_remove_existing:
+    """Find and remove existing sequences for GPC segment"""
+    input:
+        sequences="results/all/sequences.fasta",
+        manual_curated_alignment = "data/manual_alignment.fasta"
+    output:
+        sequences="results/{segment}/filtered.fasta"
+    log:
+        "logs/{segment}/find_and_remove_existing.txt",
+    run:
+        # Only run if the segment is "GPC"
+        if wildcards.segment == "gpc":
+            # Run the function to remove existing sequences
+            remove_already_exist(input.manual_curated_alignment, input.sequences, output.sequences)
+        else:
+            print(f"Skipping find_and_remove_existing for segment {wildcards.segment}.")
+
 
 rule align:
     """
-    Aligning sequences to {input.reference}
-      - filling gaps with N
+    Align sequences based on segment type:
+      - MAFFT with --addfragments and --keeplength for GPC segment
+      - Augur align for S and L segments
     """
     input:
         sequences = "results/{segment}/filtered.fasta",
-        reference = "defaults/lassa_{segment}.gb"
+        reference = lambda wildcards: (
+            "data/manual_alignment.fasta" if wildcards.segment == "gpc" else f"defaults/lassa_{wildcards.segment}.gb"
+        )
     output:
         alignment = "results/{segment}/aligned.fasta"
     log:
-        "logs/{segment}/align.txt",
+        "logs/{segment}/align.txt"
     benchmark:
         "benchmarks/{segment}/align.txt"
     shell:
         """
-        augur align \
-            --sequences {input.sequences} \
-            --reference-sequence {input.reference} \
-            --output {output.alignment} \
-            --fill-gaps \
-            --remove-reference \
-            2>&1 | tee {log}
+        if [[ "{wildcards.segment}" == "gpc" ]]; then
+            # Use MAFFT for the GPC segment
+            mafft --addfragments {input.sequences} --keeplength {input.reference} > {output.alignment} 2>&1 | tee {log}
+        else
+            # Use augur align for S and L segments
+            augur align \
+                --sequences {input.sequences} \
+                --reference-sequence {input.reference} \
+                --output {output.alignment} \
+                --fill-gaps \
+                --remove-reference \
+                2>&1 | tee {log}
+        fi
         """

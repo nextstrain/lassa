@@ -16,6 +16,7 @@ filter:
   min_length:
     l: 5000
     s: 2000
+    gpc: 800
   include: "defaults/include.txt" # need to always include root strains
   exclude: "defaults/exclude.txt"
   query: "is_lab_host != 'true'"
@@ -36,6 +37,8 @@ refine:
   root:
     l: "KM822127 MG812674"
     s: "KM822128 MG812675"
+    gpc: "KM822128"
+    #why?
 
 ancestral:
   inference: "joint"
