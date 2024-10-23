@@ -1,4 +1,5 @@
 from Bio import SeqIO
+import argparse
 
 def load_fasta_ids(fasta_file):
     """
@@ -24,4 +25,15 @@ def remove_already_exist(alignment_fasta, full_fasta, output_fasta):
 
     print(f"Sequences not in alignment have been written to {output_fasta}")
 
+if __name__=="__main__":
+    parser = argparse.ArgumentParser(
+        description="Find and remove existing sequences for GPC segment. This identifies new sequences that need to be passed to augur align --existing-alignment to maintain codon positions.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter
+    )
 
+    parser.add_argument('--sequences', type=str, required=True, help="input sequences FASTA")
+    parser.add_argument('--manual-curated-alignment', type=str, required=True, help="input manually curated FASTA alignment")
+    parser.add_argument('--output-sequences', type=str, required=True, help="output new sequences FASTA")
+    args = parser.parse_args()
+
+    remove_already_exist(args.manual_curated_alignment, args.sequences, args.output_sequences)

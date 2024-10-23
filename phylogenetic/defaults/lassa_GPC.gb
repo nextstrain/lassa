@@ -34,10 +34,10 @@ FEATURES             Location/Qualifiers
                      /db_xref="taxon:3052310"
                      /segment="S"
      gene            1..1476
-                     /locus_tag="LASVsSgp2"
+                     /gene="GPC"
                      /db_xref="GeneID:956585"
      CDS             1..1476
-                     /locus_tag="LASVsSgp2"
+                     /gene="GPC"
                      /codon_start=1
                      /product="glycoprotein"
                      /protein_id="NP_694870.1"
@@ -51,7 +51,7 @@ FEATURES             Location/Qualifiers
                      QLINKAVNALINDQLIMKNHLRDIMGIPYCNYSKYWYLNHTTTGRTSLPKCWLVSNGS
                      YLNETHFSDDIEQQADNMITEMLQKEYMERQGKTPLGLVDLFVFSTSFYLISIFLHLV
                      KIPTHRHIVGKSCPKPHRLNHMGICSCGLYKQPGVPVKWKR"
-ORIGIN      
+ORIGIN
         1 atgggacaaa tagtgacatt cttccaggaa gtgcctcatg taatagaaga ggtgatgaac
        61 attgttctca ttgcactgtc tgtactagca gtgctgaaag gtctgtacaa ttttgcaacg
       121 tgtggccttg ttggtttggt cactttcctc ctgttgtgtg gtaggtcttg cacaaccagt
@@ -78,4 +78,3 @@ ORIGIN
      1381 aagtcgtgtc ccaaacctca cagattgaat catatgggca tttgttcctg tggactctac
      1441 aaacagcctg gtgtgcctgt gaaatggaag agatga
 //
-

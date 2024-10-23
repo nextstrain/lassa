@@ -82,57 +82,53 @@ rule filter:
             --min-length {params.min_length} \
             --query "{params.query}" \
             --output {output.sequences} \
-           
+            {params.custom_params} \
             2>&1 | tee {log}
         """
-# {params.custom_params} \
+
 rule download_alignment:
-    """Download alignment only for GPC segment if it doesn't exist"""
+    """
+    Download the manually fixed GPC alignment that maintains codon alignment
+    """
     output:
-        manual_curated_alignment = "data/manual_alignment.fasta"
-    log:
-        "logs/gpc/download_alignment.txt"
-    run:
-        # Only proceed if the file does not already exist
-        if not os.path.exists(output.manual_curated_alignment):
-            shell("""
-                wget https://raw.githubusercontent.com/JoiRichi/LASV_ML_manuscript_data/main/alignment_preprocessing/final_passed_sequences.fasta \
-                -O {output.manual_curated_alignment}
-            """)
-        else:
-            print("Manual curated alignment already exists.")
+        manual_curated_alignment = "data/gpc/manual_alignment.fasta"
+    params:
+        gpc_manual_alignment=config["gpc_manual_alignment"]
+    shell:
+        """
+        curl -fsSL  {params.gpc_manual_alignment} --output {output.manual_curated_alignment}
+        """
 
-
-    
 rule find_and_remove_existing:
-    """Find and remove existing sequences for GPC segment"""
+    """
+    Find and remove existing sequences for GPC segment
+    """
     input:
-        sequences="results/all/sequences.fasta",
-        manual_curated_alignment = "data/manual_alignment.fasta"
+        sequences="data/gpc/sequences.fasta",
+        manual_curated_alignment = "data/gpc/manual_alignment.fasta"
     output:
-        sequences="results/{segment}/filtered.fasta"
+        sequences="results/gpc/new_sequences.fasta"
+    benchmark:
+        "benchmarks/gpc/find_and_remove_existing.txt"
     log:
-        "logs/{segment}/find_and_remove_existing.txt",
-    run:
-        # Only run if the segment is "GPC"
-        if wildcards.segment == "gpc":
-            # Run the function to remove existing sequences
-            remove_already_exist(input.manual_curated_alignment, input.sequences, output.sequences)
-        else:
-            print(f"Skipping find_and_remove_existing for segment {wildcards.segment}.")
-
+        "logs/gpc/find_and_remove_existing.txt",
+    shell:
+        """
+        python scripts/manual_curated_processor.py \
+            --sequences {input.sequences} \
+            --manual-curated-alignment {input.manual_curated_alignment} \
+            --output-sequences {output.sequences} \
+            2>&1 | tee {log}
+        """
 
 rule align:
     """
     Align sequences based on segment type:
-      - MAFFT with --addfragments and --keeplength for GPC segment
       - Augur align for S and L segments
     """
     input:
         sequences = "results/{segment}/filtered.fasta",
-        reference = lambda wildcards: (
-            "data/manual_alignment.fasta" if wildcards.segment == "gpc" else f"defaults/lassa_{wildcards.segment}.gb"
-        )
+        reference = "defaults/lassa_{segment}.gb"
     output:
         alignment = "results/{segment}/aligned.fasta"
     log:
@@ -141,17 +137,76 @@ rule align:
         "benchmarks/{segment}/align.txt"
     shell:
         """
-        if [[ "{wildcards.segment}" == "gpc" ]]; then
-            # Use MAFFT for the GPC segment
-            mafft --addfragments {input.sequences} --keeplength {input.reference} > {output.alignment} 2>&1 | tee {log}
-        else
-            # Use augur align for S and L segments
-            augur align \
-                --sequences {input.sequences} \
-                --reference-sequence {input.reference} \
-                --output {output.alignment} \
-                --fill-gaps \
-                --remove-reference \
-                2>&1 | tee {log}
-        fi
+        augur align \
+            --sequences {input.sequences} \
+            --reference-sequence {input.reference} \
+            --output {output.alignment} \
+            --fill-gaps \
+            --remove-reference \
+            2>&1 | tee {log}
+        """
+
+ruleorder: align_gpc > align
+
+rule align_gpc:
+    """
+    Align new GPC sequences with existing alignment:
+      - Augur align with --existing-alignment for GPC segment to maintain codon alignment
+    """
+    input:
+        sequences = "results/gpc/new_sequences.fasta",
+        manual_alignment = "data/gpc/manual_alignment.fasta"
+    output:
+        alignment = "results/gpc/aligned_with_new.fasta"
+    log:
+        "logs/gpc/align.txt"
+    benchmark:
+        "benchmarks/gpc/align_gpc.txt"
+    shell:
+        """
+        augur align \
+            --sequences {input.sequences} \
+            --existing-alignment {input.manual_alignment} \
+            --output {output.alignment} \
+            2>&1 | tee {log}
+        """
+
+ruleorder: filter_gpc > align
+
+rule filter_gpc:
+    """
+    Filtering to
+      - {params.sequences_per_group} sequence(s) per {params.group_by!s}
+      - excluding strains in {input.exclude}
+      - including strains in {input.include}
+    """
+    input:
+        sequences = "results/gpc/aligned_with_new.fasta",
+        metadata = "data/gpc/metadata.tsv",
+        include = config['filter']['include'],
+        exclude = config['filter']['exclude']
+    output:
+        sequences = "results/gpc/aligned.fasta"
+    log:
+        "logs/gpc/filter_gpc.txt",
+    benchmark:
+        "benchmarks/gpc/filter_gpc.txt"
+    params:
+        strain_id_field = config["strain_id_field"],
+        min_length = lambda wildcards: config['filter']['min_length']['gpc'],
+        query = config['filter']['query'],
+        custom_params = config['filter']['custom_params'],
+    shell:
+        """
+        augur filter \
+            --sequences {input.sequences} \
+            --metadata {input.metadata} \
+            --metadata-id-columns {params.strain_id_field} \
+            --include {input.include} \
+            --exclude {input.exclude} \
+            --min-length {params.min_length} \
+            --query "{params.query}" \
+            --output {output.sequences} \
+            {params.custom_params} \
+            2>&1 | tee {log}
         """
