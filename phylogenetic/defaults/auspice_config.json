@@ -1,7 +1,9 @@
 {
   "title": "Real-time tracking of Lassa virus evolution",
   "maintainers": [
-    { "name": "Jennifer Chang", "url": "https://bedford.io/team/jennifer-change/" },
+    { "name": "Jennifer Chang", "url": "https://bedford.io/team/jennifer-chang/" },
+    { "name": "Richard Daodu", "url": "" },
+    { "name": "Denise Kühnert", "url": "" },
     { "name": "the Nextstrain team", "url": "https://nextstrain.org/team" }
   ],
   "data_provenance": [
@@ -53,11 +55,9 @@
   },
   "filters": [
     "country",
-    "division",    
+    "division",
     "host",
     "abbr_authors"
-  ],
-  "metadata_columns": [
-    "genbank_accession"
   ]
+  
 }

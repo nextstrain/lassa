@@ -82,10 +82,10 @@ rule filter:
             --min-length {params.min_length} \
             --query "{params.query}" \
             --output {output.sequences} \
-            {params.custom_params} \
+            
             2>&1 | tee {log}
         """
-
+#{params.custom_params} \
 rule download_alignment:
     """
     Download the manually fixed GPC alignment that maintains codon alignment
@@ -210,3 +210,4 @@ rule filter_gpc:
             {params.custom_params} \
             2>&1 | tee {log}
         """
+        #{params.custom_params} \
