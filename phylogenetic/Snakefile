@@ -1,3 +1,4 @@
+
 """
 This is the main phylogenetic Snakefile that orchestrates the full phylogenetic
 workflow and defines its default output(s).
@@ -8,7 +9,7 @@ workdir: workflow.current_basedir
 # Use default configuration values. Override with Snakemake's --configfile/--config options.
 configfile: "defaults/config.yaml"
 
-segments = ["l", "s"]
+segments = ["l", "s", "gpc"]
 
 wildcard_constraints:
     segment = "|".join(segments)

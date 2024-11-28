@@ -9,6 +9,8 @@
 sequences_url: "https://data.nextstrain.org/files/workflows/lassa/{segment}/sequences.fasta.zst"
 metadata_url: "https://data.nextstrain.org/files/workflows/lassa/{segment}/metadata.tsv.zst"
 
+gpc_manual_alignment: "https://raw.githubusercontent.com/JoiRichi/LASV_ML_manuscript_data/main/alignment_preprocessing/final_passed_sequences_manual_curated.fasta"
+
 strain_id_field: "accession"
 display_strain_field: "strain"
 
@@ -16,6 +18,7 @@ filter:
   min_length:
     l: 5000
     s: 2000
+    gpc: 800
   include: "defaults/include.txt" # need to always include root strains
   exclude: "defaults/exclude.txt"
   query: "is_lab_host != 'true'"
@@ -36,6 +39,8 @@ refine:
   root:
     l: "KM822127 MG812674"
     s: "KM822128 MG812675"
+    gpc: "KM822128"
+    #why?
 
 ancestral:
   inference: "joint"
