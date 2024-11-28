@@ -40,7 +40,6 @@ refine:
     l: "KM822127 MG812674"
     s: "KM822128 MG812675"
     gpc: "KM822128"
-    #why?
 
 ancestral:
   inference: "joint"
