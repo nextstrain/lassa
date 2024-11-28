@@ -1,0 +1,7 @@
+# GenBank Accessions with lineage number and names
+KM821830 # LIV Sierra leone
+MK656426 # LV Ivory Coast
+MK107968 # LIII Northern Nigeria
+MF990888 # LVII Togo
+KM822128 # LI Pinneo
+MK117961 # LIII Southern Nigeria
