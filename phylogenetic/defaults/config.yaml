@@ -31,7 +31,6 @@ tree:
 refine:
   coalescent: "opt"
   date_inference: "marginal"
-  clock_rate: 0.0006
   # Root the tree based on "best" the default value for treetime
   root:
     l: "best"
