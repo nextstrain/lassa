@@ -1,0 +1,74 @@
+{
+  "title": "Real-time tracking of Lassa virus evolution",
+  "maintainers": [
+    { "name": "Jennifer Chang", "url": "https://bedford.io/team/jennifer-chang/" },
+    { "name": "Richard Daodu", "url": "https://github.com/JoiRichi" },
+    { "name": "Denise Kühnert", "url": "https://www.shh.mpg.de/person/54587/935000" },
+    { "name": "the Nextstrain team", "url": "https://nextstrain.org/team" }
+  ],
+  "data_provenance": [
+    {
+      "name": "GenBank",
+      "url": "https://www.ncbi.nlm.nih.gov/genbank/"
+    }
+  ],
+  "build_url": "https://github.com/nextstrain/lassa",
+  "colorings": [
+    {
+      "key": "gt",
+      "title": "Genotype",
+      "type": "categorical"
+    },
+    {
+      "key": "num_date",
+      "title": "Date",
+      "type": "continuous"
+    },
+    {
+      "key": "country",
+      "title": "Country",
+      "type": "categorical"
+    },
+    {
+      "key": "division",
+      "title": "Admin Division",
+      "type": "categorical"
+    },
+    {
+      "key": "host",
+      "title": "Host",
+      "type": "categorical"
+    },
+    {
+      "key": "abbr_authors",
+      "title": "Authors",
+      "type": "categorical"
+    },
+    {
+      "key": "clade_membership",
+      "title": "Clade",
+      "type": "categorical"
+    },
+    {
+      "key": "lineage_name",
+      "title": "Lineage name",
+      "type": "categorical"
+    }
+  ],
+  "geo_resolutions": [
+    "country"
+  ],
+  "display_defaults": {
+    "map_triplicate": false,
+    "color_by": "clade_membership",
+    "distance_measure": "div"
+  },
+  "filters": [
+    "country",
+    "division",
+    "host",
+    "abbr_authors",
+    "clade_membership",
+    "lineage_name"
+  ]
+}

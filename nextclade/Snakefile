@@ -14,6 +14,7 @@ configfile: "defaults/config.yaml"
 # https://docs.nextstrain.org/projects/nextclade/page/user/datasets.html
 rule all:
     input:
+        tree="auspice/tree.json"
         # Fill in paths to the final exported Nextclade dataset.
 
 
