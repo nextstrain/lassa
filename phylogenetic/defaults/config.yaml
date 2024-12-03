@@ -31,11 +31,11 @@ tree:
 refine:
   coalescent: "opt"
   date_inference: "marginal"
-  # Root the tree based on "best" the default value for treetime
+  # Root the tree based on "mid_point" the default value for treetime
   root:
-    l: "best"
-    s: "best"
-    gpc: "best"
+    l: "mid_point"
+    s: "mid_point"
+    gpc: "mid_point"
 
 ancestral:
   inference: "joint"
