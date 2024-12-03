@@ -31,15 +31,11 @@ tree:
 refine:
   coalescent: "opt"
   date_inference: "marginal"
-  clock_rate: 0.0006
-  # Rooting to outgroup clade based on strains
-  # Pinneo-NIG-1969 (L accession KM822127 and S accession KM822128)
-  # and strain 812285 (L accession MG812674 and S accession MG812675)
-  # TreeTime needs two tips to root to common ancestor of these tips
+  # Root the tree based on "mid_point" for treetime
   root:
-    l: "KM822127 MG812674"
-    s: "KM822128 MG812675"
-    gpc: "KM822128"
+    l: "mid_point"
+    s: "mid_point"
+    gpc: "mid_point"
 
 ancestral:
   inference: "joint"
