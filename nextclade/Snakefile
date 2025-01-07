@@ -14,9 +14,9 @@ configfile: "defaults/config.yaml"
 # https://docs.nextstrain.org/projects/nextclade/page/user/datasets.html
 rule all:
     input:
-        tree="auspice/tree.json"
-        # Fill in paths to the final exported Nextclade dataset.
-
+        tree="auspice/tree.json",
+        nextclade_dataset="dataset/tree.json",
+        test_dataset="test_out",
 
 # These rules are imported in the order that they are expected to run.
 # Each Snakefile will have documented inputs and outputs that should be kept as
@@ -33,6 +33,7 @@ include: "rules/prepare_sequences.smk"
 include: "rules/construct_phylogeny.smk"
 include: "rules/annotate_phylogeny.smk"
 include: "rules/export.smk"
+include: "rules/assemble_nextclade_dataset.smk"
 
 # Allow users to import custom rules provided via the config.
 # This allows users to run custom rules that can extend or override the workflow.
