@@ -70,5 +70,25 @@
     "abbr_authors",
     "clade_membership",
     "lineage_name"
-  ]
+  ],
+  "extensions": {
+    "clade_node_attrs": [
+        {
+          "name": "lineage_name",
+          "displayName": "Lassa lineage name",
+          "description": "Global lassa lineages based on [citation here]."
+        }
+      ],
+    "nextclade": {
+      "pathogen": {
+        "schemaVersion":"3.0.0",
+        "defaultCds": "GPC",
+        "attributes": {
+          "name": "Lassa Global Tree",
+          "reference name": "Josiah",
+          "reference accession": "NC_004296"
+        }
+      }
+    }
+  }
 }
