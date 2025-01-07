@@ -1,4 +1,5 @@
 # GenBank Accessions with lineage number and names
+NC_004296 # Josiah LIV_V Sierra leone Ivory Coast
 KM822128 # LI Pinneo
 MK117961 # LII Southern Nigeria
 MK107968 # LIII Northern Nigeria
