@@ -29,6 +29,7 @@ rule ancestral:
     input:
         tree = "results/tree.nwk",
         alignment = "data/sequences.fasta",
+        reference_fasta = "defaults/reference_gpc.fasta",
     output:
         node_data = "results/nt_muts.json"
     log:
@@ -44,6 +45,7 @@ rule ancestral:
             --alignment {input.alignment} \
             --output-node-data {output.node_data} \
             --inference {params.inference} \
+            --root-sequence {input.reference_fasta} \
             2>&1 | tee {log}
         """
 
