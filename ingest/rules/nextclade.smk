@@ -24,7 +24,7 @@ rule run_nextclade_to_identify_segment:
         sequences = "results/all/sequences.fasta",
         segment_reference = config["nextclade"]["segment_reference"],
     output:
-        sequences = "results/{segment}/sequences.fasta",
+        sequences = "data/{segment}/sequences.fasta",
     params:
         min_seed_cover = config["nextclade"]["min_seed_cover"],
     shell:
@@ -33,23 +33,32 @@ rule run_nextclade_to_identify_segment:
             --input-ref {input.segment_reference} \
             --output-fasta {output.sequences} \
             --min-seed-cover {params.min_seed_cover} \
+            --retry-reverse-complement true \
             --silent \
             {input.sequences}
         """
 
 rule subset_metadata_by_segment:
     input:
+        segment_sequences = "data/{segment}/sequences.fasta",
         metadata = "results/all/metadata.tsv",
-        sequences = "results/{segment}/sequences.fasta",
+        sequences = "results/all/sequences.fasta",
     output:
         metadata = "results/{segment}/metadata.tsv",
+        sequences = "results/{segment}/sequences.fasta",
     params:
         strain_id_field = config["curate"]["output_id_field"],
     shell:
         """
         augur filter \
-            --sequences {input.sequences} \
+            --sequences {input.segment_sequences} \
             --metadata {input.metadata} \
             --metadata-id-columns {params.strain_id_field} \
             --output-metadata {output.metadata}
+
+        augur filter \
+            --sequences {input.sequences} \
+            --metadata {output.metadata} \
+            --metadata-id-columns {params.strain_id_field} \
+            --output-sequences {output.sequences}
         """

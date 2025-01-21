@@ -13,3 +13,16 @@ OR493503 # Large insertion off the end of the S segment
 OR493504 # Large insertion off the end of the S segment
 OM735982 # Large insertion of Ns in the S segment
 MK117995 # 6 base insersion in the S segment
+OK573204 # Seems to be an alternative isolate of Josiah L segment
+HQ688674 # Seems to be an alternative isolate of Josiah L segment
+HQ688675 # Seems to be an alternative isolate of Josiah L segment
+MW004546 # Seems to be an alternative isolate of Josiah L segment
+AY628202 # Seems to be an alternative isolate of Josiah L segment
+PQ421570 # Seems to be an alternative isolate of Josiah L segment
+U73034 # Original of reference NC_004297 L segment
+U63094 # Duplicate of reference NC_004297 L segment
+J04324 # Seems to be an alternative isolate of Josiah S segment
+HQ688672 # Seems to be an alternative isolate of Josiah S segment
+HQ688673 # Seems to be an alternative isolate of Josiah S segment
+MW004547 # Seems to be an alternative isolate of Josiah S segment
+AY628203 # Seems to be an alternative isolate of Josiah S segment
