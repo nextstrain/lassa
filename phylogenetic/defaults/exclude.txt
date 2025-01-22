@@ -26,3 +26,5 @@ HQ688672 # Seems to be an alternative isolate of Josiah S segment
 HQ688673 # Seems to be an alternative isolate of Josiah S segment
 MW004547 # Seems to be an alternative isolate of Josiah S segment
 AY628203 # Seems to be an alternative isolate of Josiah S segment
+OR493500 # Large gap within the NP gene region in the S segment
+PQ421571 # Seems to be an alternative isolate of Josiah S segment
