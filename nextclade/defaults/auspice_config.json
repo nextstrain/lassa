@@ -89,6 +89,14 @@
           "reference accession": "NC_004296"
         },
         "alignmentParams": {
+          "penaltyGapExtend": 1,
+          "penaltyGapOpen": 8,
+          "penaltyGapOpenInFrame": 9,
+          "penaltyGapOpenOutOfFrame": 10,
+          "penaltyMismatch": 1,
+          "scoreMatch": 5,
+          "retryReverseComplement": true,
+          "allowedMismatches": 10,
           "minSeedCover": 0.01
         },
         "qc": {
