@@ -123,3 +123,9 @@ curate:
 nextclade:
   segment_reference: "../shared/lassa_{segment}.fasta"
   min_seed_cover: 0.01
+  dataset: "../nextclade_data"
+  field_map:
+    seqName: accession # ID field used to merge annotations
+    clade: lineage
+  id_field: accession
+  min_length: 800

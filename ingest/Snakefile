@@ -36,16 +36,6 @@ include: "rules/fetch_from_ncbi.smk"
 include: "rules/curate.smk"
 include: "rules/nextclade.smk"
 
-rule create_final_metadata:
-    input:
-        metadata="data/subset_metadata.tsv"
-    output:
-        metadata="results/all/metadata.tsv"
-    shell:
-        """
-        cp {input.metadata} {output.metadata}
-        """
-
 # Allow users to import custom rules provided via the config.
 # This allows users to run custom rules that can extend or override the workflow.
 # A concrete example of using custom rules is the extension of the workflow with
