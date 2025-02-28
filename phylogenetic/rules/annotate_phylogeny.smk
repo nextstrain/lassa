@@ -59,7 +59,7 @@ rule translate:
     input:
         tree = "results/{segment}/tree.nwk",
         node_data = "results/{segment}/nt_muts.json",
-        reference = "defaults/lassa_{segment}.gb"
+        reference = "defaults/{segment}/reference.gb"
     output:
         node_data = "results/{segment}/aa_muts.json"
     log:
