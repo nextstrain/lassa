@@ -19,10 +19,30 @@ This part of the workflow usually includes the following steps:
 See Augur's usage docs for these commands for more details.
 """
 
+rule add_outgroup:
+    """Add outgroup"""
+    input:
+        alignment = "results/{segment}/aligned.fasta",
+        outgroup = "defaults/{segment}/outgroup.fasta",
+    output:
+        alignment_with_outgroup = "results/{segment}/aligned_with_outgroup.fasta",
+    log:
+        "logs/{segment}/add-outgroup.txt",
+    benchmark:
+        "benchmarks/{segment}/add-outgroup.txt",
+    shell:
+        """
+        augur align \
+            --sequences {input.outgroup} \
+            --existing-alignment {input.alignment} \
+            --output {output.alignment_with_outgroup} \
+            2>&1 | tee {log}
+        """
+
 rule tree:
     """Building tree"""
     input:
-        alignment = "results/{segment}/aligned.fasta"
+        alignment = "results/{segment}/aligned_with_outgroup.fasta"
     output:
         tree = "results/{segment}/tree_raw.nwk"
     log:
@@ -63,7 +83,7 @@ rule refine:
         strain_id_field = config["strain_id_field"],
         coalescent = config['refine']['coalescent'],
         date_inference = config['refine']['date_inference'],
-        root = lambda wildcards: config['refine']['root'][wildcards.segment],
+        outgroup = lambda wildcards: config['refine']['outgroup'][wildcards.segment],
     shell:
         """
         augur refine \
@@ -77,6 +97,7 @@ rule refine:
             --coalescent {params.coalescent} \
             --date-confidence \
             --date-inference {params.date_inference} \
-            --root {params.root} \
+            --root {params.outgroup} \
+            --remove-outgroup \
             2>&1 | tee {log}
         """

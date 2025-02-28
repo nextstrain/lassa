@@ -32,10 +32,10 @@ refine:
   coalescent: "opt"
   date_inference: "marginal"
   # Root the tree based on "mid_point" for treetime
-  root:
-    l: "mid_point"
-    s: "mid_point"
-    gpc: "mid_point"
+  outgroup:
+    l: "NC_006574"
+    s: "NC_006575"
+    gpc: "NC_006575"
 
 ancestral:
   inference: "joint"
