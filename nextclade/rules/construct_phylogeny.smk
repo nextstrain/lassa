@@ -19,10 +19,30 @@ This part of the workflow usually includes the following steps:
 See Augur's usage docs for these commands for more details.
 """
 
+rule add_outgroup:
+    """Add outgroup"""
+    input:
+        alignment = "data/sequences.fasta",
+        outgroup = "../phylogenetic/defaults/gpc/outgroup.fasta",
+    output:
+        alignment_with_outgroup = "results/sequences_with_outgroup.fasta",
+    log:
+        "logs/add-outgroup.txt",
+    benchmark:
+        "benchmarks/add-outgroup.txt",
+    shell:
+        """
+        augur align \
+            --sequences {input.outgroup} \
+            --existing-alignment {input.alignment} \
+            --output {output.alignment_with_outgroup} \
+            2>&1 | tee {log}
+        """
+
 rule tree:
     """Building tree"""
     input:
-        alignment = "data/sequences.fasta"
+        alignment = "results/sequences_with_outgroup.fasta"
     output:
         tree = "results/tree_raw.nwk"
     log:
@@ -64,7 +84,7 @@ rule refine:
         coalescent = config['refine']['coalescent'],
         date_inference = config['refine']['date_inference'],
         clock_rate = config['refine']['clock_rate'],
-        root = lambda wildcards: config['refine']['root'],
+        root = lambda wildcards: config['refine']['outgroup'],
     shell:
         """
         augur refine \
@@ -80,5 +100,6 @@ rule refine:
             --date-confidence \
             --date-inference {params.date_inference} \
             --root {params.root} \
+            --remove-outgroup \
             2>&1 | tee {log}
         """
