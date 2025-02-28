@@ -128,7 +128,7 @@ rule align:
     """
     input:
         sequences = "results/{segment}/filtered.fasta",
-        reference = "defaults/{segment}/reference_.gb"
+        reference = "defaults/{segment}/reference.gb"
     output:
         alignment = "results/{segment}/aligned.fasta"
     log:
