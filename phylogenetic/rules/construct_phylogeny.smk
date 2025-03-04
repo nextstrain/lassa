@@ -63,6 +63,7 @@ rule refine:
         strain_id_field = config["strain_id_field"],
         coalescent = config['refine']['coalescent'],
         date_inference = config['refine']['date_inference'],
+        literature_clock_rate = config['refine']['literature_clock_rate'],
         root = lambda wildcards: config['refine']['root'][wildcards.segment],
     shell:
         """
@@ -78,5 +79,6 @@ rule refine:
             --date-confidence \
             --date-inference {params.date_inference} \
             --root {params.root} \
+            --clock-rate {params.literature_clock_rate} \
             2>&1 | tee {log}
         """
