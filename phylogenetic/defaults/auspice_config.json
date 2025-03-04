@@ -40,6 +40,11 @@
       "type": "categorical"
     },
     {
+      "key": "lineage",
+      "title": "Lineage",
+      "type": "categorical"
+    },
+    {
       "key": "abbr_authors",
       "title": "Authors",
       "type": "categorical"
