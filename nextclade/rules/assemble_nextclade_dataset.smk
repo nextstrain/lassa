@@ -45,14 +45,14 @@ rule assemble_dataset:
         changelog="dataset/CHANGELOG.md",
         dataset_zip="dataset.zip",
     shell:
-        """
-        cp {input.tree} {output.tree}
-        cp {input.reference} {output.reference}
-        cp {input.annotation} {output.annotation}
-        cp {input.sequences} {output.sequences}
-        cp {input.pathogen} {output.pathogen}
-        cp {input.readme} {output.readme}
-        cp {input.changelog} {output.changelog}
+        r"""
+        cp {input.tree:q} {output.tree:q}
+        cp {input.reference:q} {output.reference:q}
+        cp {input.annotation:q} {output.annotation:q}
+        cp {input.sequences:q} {output.sequences:q}
+        cp {input.pathogen:q} {output.pathogen:q}
+        cp {input.readme:q} {output.readme:q}
+        cp {input.changelog:q} {output.changelog:q}
         zip -rj dataset.zip  dataset/*
         """
 
@@ -63,9 +63,9 @@ rule test:
     output:
         output=directory("test_out"),
     shell:
-        """
+        r"""
         nextclade3 run \
-            --input-dataset {input.dataset} \
-            --output-all {output.output} \
-            {input.sequences}
+            --input-dataset {input.dataset:q} \
+            --output-all {output.output:q} \
+            {input.sequences:q}
         """

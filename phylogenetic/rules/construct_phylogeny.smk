@@ -32,12 +32,12 @@ rule tree:
     params:
         method = "iqtree"
     shell:
-        """
+        r"""
         augur tree \
-            --alignment {input.alignment} \
-            --output {output.tree} \
-            --method {params.method} \
-            2>&1 | tee {log}
+            --alignment {input.alignment:q} \
+            --output {output.tree:q} \
+            --method {params.method:q} \
+            2>&1 | tee {log:q}
         """
 
 rule refine:
@@ -66,19 +66,19 @@ rule refine:
         literature_clock_rate = config['refine']['literature_clock_rate'],
         root = lambda wildcards: config['refine']['root'][wildcards.segment],
     shell:
-        """
+        r"""
         augur refine \
-            --tree {input.tree} \
-            --alignment {input.alignment} \
-            --metadata {input.metadata} \
-            --metadata-id-columns {params.strain_id_field} \
-            --output-tree {output.tree} \
-            --output-node-data {output.node_data} \
+            --tree {input.tree:q} \
+            --alignment {input.alignment:q} \
+            --metadata {input.metadata:q} \
+            --metadata-id-columns {params.strain_id_field:q} \
+            --output-tree {output.tree:q} \
+            --output-node-data {output.node_data:q} \
             --timetree \
-            --coalescent {params.coalescent} \
+            --coalescent {params.coalescent:q} \
             --date-confidence \
-            --date-inference {params.date_inference} \
-            --root {params.root} \
-            --clock-rate {params.literature_clock_rate} \
-            2>&1 | tee {log}
+            --date-inference {params.date_inference:q} \
+            --root {params.root:q} \
+            --clock-rate {params.literature_clock_rate:q} \
+            2>&1 | tee {log:q}
         """

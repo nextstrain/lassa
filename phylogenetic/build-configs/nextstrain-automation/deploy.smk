@@ -10,6 +10,6 @@ rule deploy_all:
     params:
         deploy_url = config["deploy_url"]
     shell:
-        """
-        nextstrain remote upload {params.deploy_url} {input}
+        r"""
+        nextstrain remote upload {params.deploy_url:q} {input:q}
         """

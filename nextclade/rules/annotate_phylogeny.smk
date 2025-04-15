@@ -39,14 +39,14 @@ rule ancestral:
     params:
         inference = "joint"
     shell:
-        """
+        r"""
         augur ancestral \
-            --tree {input.tree} \
-            --alignment {input.alignment} \
-            --output-node-data {output.node_data} \
-            --inference {params.inference} \
-            --root-sequence {input.reference_fasta} \
-            2>&1 | tee {log}
+            --tree {input.tree:q} \
+            --alignment {input.alignment:q} \
+            --output-node-data {output.node_data:q} \
+            --inference {params.inference:q} \
+            --root-sequence {input.reference_fasta:q} \
+            2>&1 | tee {log:q}
         """
 
 rule translate:
@@ -62,13 +62,13 @@ rule translate:
     benchmark:
         "benchmarks/translate.txt"
     shell:
-        """
+        r"""
         augur translate \
-            --tree {input.tree} \
-            --ancestral-sequences {input.node_data} \
-            --reference-sequence {input.reference} \
-            --output-node-data {output.node_data} \
-            2>&1 | tee {log}
+            --tree {input.tree:q} \
+            --ancestral-sequences {input.node_data:q} \
+            --reference-sequence {input.reference:q} \
+            --output-node-data {output.node_data:q} \
+            2>&1 | tee {log:q}
         """
 
 rule traits:
@@ -86,13 +86,13 @@ rule traits:
         strain_id_field = config["strain_id_field"],
         columns = config['traits']['columns']
     shell:
-        """
+        r"""
         augur traits \
-            --tree {input.tree} \
-            --metadata {input.metadata} \
-            --metadata-id-columns {params.strain_id_field} \
-            --output-node-data {output.node_data} \
-            --columns {params.columns} \
+            --tree {input.tree:q} \
+            --metadata {input.metadata:q} \
+            --metadata-id-columns {params.strain_id_field:q} \
+            --output-node-data {output.node_data:q} \
+            --columns {params.columns:q} \
             --confidence \
-            2>&1 | tee {log}
+            2>&1 | tee {log:q}
         """
