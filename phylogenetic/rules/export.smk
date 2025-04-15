@@ -37,13 +37,13 @@ rule colors:
     benchmark:
         "benchmarks/{segment}/colors.txt"
     shell:
-        """
+        r"""
         python3 scripts/assign-colors.py \
-            --color-schemes {input.color_schemes} \
-            --ordering {input.color_orderings} \
-            --metadata {input.metadata} \
-            --output {output.colors} \
-            2>&1 | tee {log}
+            --color-schemes {input.color_schemes:q} \
+            --ordering {input.color_orderings:q} \
+            --metadata {input.metadata:q} \
+            --output {output.colors:q} \
+            2>&1 | tee {log:q}
         """
 
 rule export:
@@ -67,18 +67,18 @@ rule export:
     params:
         strain_id_field = config["strain_id_field"],
     shell:
-        """
+        r"""
         augur export v2 \
-            --tree {input.tree} \
-            --metadata {input.metadata} \
-            --metadata-id-columns {params.strain_id_field} \
-            --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts} \
-            --colors {input.colors} \
-            --description {input.description} \
-            --auspice-config {input.auspice_config} \
-            --output {output.auspice} \
+            --tree {input.tree:q} \
+            --metadata {input.metadata:q} \
+            --metadata-id-columns {params.strain_id_field:q} \
+            --node-data {input.branch_lengths:q} {input.traits:q} {input.nt_muts:q} {input.aa_muts:q} \
+            --colors {input.colors:q} \
+            --description {input.description:q} \
+            --auspice-config {input.auspice_config:q} \
+            --output {output.auspice:q} \
             --include-root-sequence-inline \
-            2>&1 | tee {log}
+            2>&1 | tee {log:q}
         """
 
 rule final_strain_name:
@@ -95,12 +95,12 @@ rule final_strain_name:
         strain_id_field=config["strain_id_field"],
         display_strain_field=config["display_strain_field"],
     shell:
-        """
+        r"""
         python3 scripts/set_final_strain_name.py \
-            --metadata {input.metadata} \
-            --metadata-id-columns {params.strain_id_field} \
-            --input-auspice-json {input.auspice_json} \
-            --display-strain-name {params.display_strain_field} \
-            --output {output.auspice_json} \
-            2>&1 | tee {log}
+            --metadata {input.metadata:q} \
+            --metadata-id-columns {params.strain_id_field:q} \
+            --input-auspice-json {input.auspice_json:q} \
+            --display-strain-name {params.display_strain_field:q} \
+            --output {output.auspice_json:q} \
+            2>&1 | tee {log:q}
         """

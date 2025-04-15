@@ -28,23 +28,23 @@ rule run_nextclade_to_identify_segment:
     params:
         min_seed_cover = config["nextclade"]["min_seed_cover"],
     shell:
-        """
+        r"""
         nextclade run \
-            --input-ref {input.segment_reference} \
-            --output-fasta {output.sequences} \
-            --min-seed-cover {params.min_seed_cover} \
+            --input-ref {input.segment_reference:q} \
+            --output-fasta {output.sequences:q} \
+            --min-seed-cover {params.min_seed_cover:q} \
             --retry-reverse-complement true \
             --silent \
-            {input.sequences}
+            {input.sequences:q}
 
         echo "accession|segment" \
             | tr '|' '\t' \
-            > {output.segment}
+            > {output.segment:q}
 
-        grep ">" {output.sequences} \
+        grep ">" {output.sequences:q} \
             | sed 's/>//g' \
             | awk '{{print $1"\t{wildcards.segment}"}}' \
-            >> {output.segment}
+            >> {output.segment:q}
         """
 
 rule run_nextclade:
@@ -66,12 +66,12 @@ rule run_nextclade:
     shell:
         r"""
         nextclade3 run \
-            --input-dataset {input.dataset} \
-            -j {threads} \
-            --output-tsv {output.nextclade} \
+            --input-dataset {input.dataset:q} \
+            -j {threads:q} \
+            --output-tsv {output.nextclade:q} \
             --silent \
-            --min-length {params.min_length} \
-            {input.sequences} \
+            --min-length {params.min_length:q} \
+            {input.sequences:q} \
           &> {log:q}
         """
 
@@ -91,14 +91,14 @@ rule select_nextclade_results:
     benchmark:
         "benchmarks/select_nextclade_results.txt",
     shell:
-        """
-        echo "{params.output_nextclade_fields}" \
+        r"""
+        echo "{params.output_nextclade_fields:q}" \
         | tr ',' '\t' \
-        > {output.nextclade}
+        > {output.nextclade:q}
 
-        tsv-select -H -f "{params.input_nextclade_fields}" {input.nextclade} \
+        tsv-select -H -f "{params.input_nextclade_fields}" {input.nextclade:q} \
         | awk 'NR>1 {{print}}' \
-        >> {output.nextclade}
+        >> {output.nextclade:q}
         """
 
 rule append_nextclade_columns:
@@ -120,7 +120,7 @@ rule append_nextclade_columns:
     benchmark:
         "benchmarks/append_nextclade_columns.txt",
     shell:
-        """
+        r"""
         augur merge \
             --metadata \
                 metadata={input.metadata:q} \
@@ -148,16 +148,16 @@ rule subset_metadata_by_segment:
     params:
         strain_id_field = config["curate"]["output_id_field"],
     shell:
-        """
+        r"""
         augur filter \
-            --sequences {input.segment_sequences} \
-            --metadata {input.metadata} \
-            --metadata-id-columns {params.strain_id_field} \
-            --output-metadata {output.metadata}
+            --sequences {input.segment_sequences:q} \
+            --metadata {input.metadata:q} \
+            --metadata-id-columns {params.strain_id_field:q} \
+            --output-metadata {output.metadata:q}
 
         augur filter \
-            --sequences {input.sequences} \
-            --metadata {output.metadata} \
-            --metadata-id-columns {params.strain_id_field} \
-            --output-sequences {output.sequences}
+            --sequences {input.sequences:q} \
+            --metadata {output.metadata:q} \
+            --metadata-id-columns {params.strain_id_field:q} \
+            --output-sequences {output.sequences:q}
         """
