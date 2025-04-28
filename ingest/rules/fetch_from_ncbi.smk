@@ -105,7 +105,7 @@ rule format_ncbi_dataset_report:
 rule format_ncbi_datasets_ndjson:
     input:
         ncbi_dataset_sequences="data/ncbi_dataset_sequences.fasta",
-        ncbi_dataset_tsv="data/ncbi_dataset_report.tsv",
+        ncbi_dataset_tsv="data/ncbi_dataset_report_with_strain.tsv",
     output:
         ndjson="data/ncbi.ndjson",
     log:
@@ -122,4 +122,57 @@ rule format_ncbi_datasets_ndjson:
             --unmatched-reporting warn \
             --duplicate-reporting warn \
             2> {log:q} > {output.ndjson:q}
+        """
+
+###########################################################################
+########################## 2. Fetch from Entrez ###########################
+###########################################################################
+
+rule fetch_from_ncbi_entrez:
+    params:
+        term=config["entrez_search_term"],
+    output:
+        genbank="data/genbank.gb",
+    # Allow retries in case of network errors
+    retries: 5
+    benchmark:
+        "benchmarks/fetch_from_ncbi_entrez.txt"
+    shell:
+        """
+        vendored/fetch-from-ncbi-entrez \
+            --term {params.term:q} \
+            --output {output.genbank}
+        """
+
+rule parse_strain_from_genbank:
+    input:
+        genbank="data/genbank.gb",
+    output:
+        metadata="data/metadata_ncbi_entrez.tsv",
+    benchmark:
+        "benchmarks/parse_strain_from_genbank.txt"
+    shell:
+        r"""
+        bio json {input.genbank:q} \
+        | jq -c '.[] | {{accession: .record.accessions[0], strain: .record.strain[0]}}' \
+        | augur curate passthru \
+            --output-metadata {output.metadata:q} ) 2>> {log:q}
+        """
+
+rule merge_strain_name:
+    input:
+        ncbi_dataset="data/ncbi_dataset_report.tsv",
+        ncbi_entrez="data/metadata_ncbi_entrez.tsv",
+    output:
+        metadata="data/ncbi_dataset_report_with_strain.tsv",
+    log:
+        "logs/merge_strain_name.txt"
+    params:
+        metadata_id='accession',
+    shell:
+        r"""
+        augur merge \
+          --metadata datasets={input.ncbi_dataset:q} entrez={input.ncbi_entrez:q} \
+          --metadata-id-columns {params.metadata_id} \
+          --output-metadata {output.metadata:q} 2>> {log:q}
         """
