@@ -130,7 +130,7 @@ rule format_ncbi_datasets_ndjson:
 
 rule fetch_from_ncbi_entrez:
     params:
-        term=config["entrez_search_term"],
+        term=f'txid{config["ncbi_taxon_id"]}[Primary Organism]',
     output:
         genbank="data/genbank.gb",
     # Allow retries in case of network errors
@@ -144,17 +144,34 @@ rule fetch_from_ncbi_entrez:
             --output {output.genbank}
         """
 
-rule parse_strain_from_genbank:
+rule genbank_to_json:
     input:
         genbank="data/genbank.gb",
     output:
-        metadata="data/metadata_ncbi_entrez.tsv",
+        ndjson=temp("data/entrez.ndjson"),
     benchmark:
-        "benchmarks/parse_strain_from_genbank.txt"
+        "benchmarks/genbank_to_json.txt",
+    log:
+        "logs/genbank_to_json.txt",
     shell:
         r"""
-        bio json {input.genbank:q} \
-        | jq -c '.[] | {{accession: .record.accessions[0], strain: .record.strain[0]}}' \
+        (bio json --lines {input.genbank:q} \
+        > {output.ndjson} ) 2>> {log:q}
+        """
+
+rule parse_strain:
+    input:
+        ndjson="data/entrez.ndjson",
+    output:
+        metadata="data/metadata_ncbi_entrez.tsv",
+    benchmark:
+        "benchmarks/parse_strain.txt",
+    log:
+        "logs/parse_strain.txt"
+    shell:
+        r"""
+        ( cat {input.ndjson:q} \
+        | jq -c '{{accession: .record.accessions[0], strain: .record.strain[0]}}' \
         | augur curate passthru \
             --output-metadata {output.metadata:q} ) 2>> {log:q}
         """

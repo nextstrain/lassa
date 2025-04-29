@@ -7,9 +7,6 @@
 # Required to fetch from NCBI Datasets
 ncbi_taxon_id: "3052310"
 
-# Required to fetch from Entrez
-entrez_search_term: "txid3052310[Primary Organism]"
-
 # The list of NCBI Datasets fields to include from NCBI Datasets output
 # These need to be the "mnemonics" of the NCBI Datasets fields, see docs for full list of fields
 # https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/command-line/dataformat/tsv/dataformat_tsv_virus-genome/#fields
