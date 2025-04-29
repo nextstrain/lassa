@@ -9,7 +9,14 @@ Much of the genomic data here comes from publications [Andersen et al 2015](http
 
 We maintain two views of Lassa virus evolution: one showing evolution of the [L segment](https://nextstrain.org/lassa/l) and the other showing evolution of the [S segment](https://nextstrain.org/lassa/s). A tangle tree showing [co-evolution of L and S](https://nextstrain.org/lassa/l:lassa/s) is also available.
 
-#### Underlying data
+### Lineage Calling - Nextclade
+
+A GPC-based Nextclade dataset for calling Lassa lineages is available at the following links:
+
+* [View the Lassa Nextclade scaffold tree](https://next.nextstrain.org/staging/lassa/nextclade8)
+* [Query the Lassa Nextclade dataset](https://clades.nextstrain.org/?dataset-json-url=https%3A%2F%2Fnext.nextstrain.org%2Fstaging%2Flassa%2Fnextclade8)
+
+### Underlying data
 
 We curate sequence data and metadata from NCBI as the starting point for our analyses. Curated sequences and metadata are available as flat files at:
 
