@@ -171,7 +171,7 @@ rule parse_strain:
     shell:
         r"""
         ( cat {input.ndjson:q} \
-        | jq -c '{{accession: .record.accessions[0], strain: .record.strain[0]}}' \
+        | jq -c '{{accession: .record.accessions[0], strain: .record.strain[0], segment_genbank: .record.segment[0], note: .record.note[0]}}' \
         | augur curate passthru \
             --output-metadata {output.metadata:q} ) 2>> {log:q}
         """

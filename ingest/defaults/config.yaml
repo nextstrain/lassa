@@ -101,6 +101,7 @@ curate:
     "accession_version",
     "strain",
     "isolate",
+    "note",
     "date",
     "region",
     "country",
@@ -115,6 +116,7 @@ curate:
     "authors",
     "abbr_authors",
     "institution",
+    "segment_genbank",
   ]
 
 # Nextclade parameters to include if you are running Nextclade as a part of your ingest workflow
