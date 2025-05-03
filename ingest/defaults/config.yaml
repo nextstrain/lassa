@@ -117,7 +117,7 @@ curate:
   ]
 
 nextclade:
-  segment_reference: "../shared/lassa_{segment}.fasta"
+  segment_reference: "../phylogenetic/defaults/{segment}/reference.fasta"
   min_seed_cover: 0.01
   dataset: "../nextclade_data"
   field_map:
