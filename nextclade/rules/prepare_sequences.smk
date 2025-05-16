@@ -45,3 +45,40 @@ rule align:
             --remove-reference \
             2>&1 | tee {log:q}
         """
+
+ruleorder: align_gpc > align
+
+rule align_gpc:
+    """
+    Align sequences based on segment type:
+    """
+    input:
+        sequences = "results/{segment}/filtered.fasta",
+        metadata = "data/{segment}/metadata_merged.tsv",
+        reference = "../phylogenetic/defaults/{segment}/reference.gb",
+        guide_alignment = "defaults/{segment}/guide_alignment.fasta",
+    output:
+        alignment = "results/{segment}/aligned.fasta"
+    log:
+        "logs/{segment}/align.txt"
+    benchmark:
+        "benchmarks/{segment}/align.txt"
+    shell:
+        r"""
+        mafft \
+          --add {input.sequences:q} \
+          --keeplength \
+          --reorder \
+          --anysymbol \
+          --nomemsave \
+          --adjustdirection \
+          --thread 1 \
+          {input.guide_alignment:q} \
+          1> {output.alignment:q}_temp
+
+        augur filter \
+          --sequences {output.alignment:q}_temp \
+          --metadata {input.metadata:q} \
+          --metadata-id-columns "accession" \
+          --output-sequences {output.alignment:q}
+        """

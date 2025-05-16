@@ -1,6 +1,6 @@
-LOCUS       NC_004296               1476 bp ss-RNA     linear   VRL 13-AUG-2018
+LOCUS       NC_004296_REF               1476 bp ss-RNA     linear   VRL 13-AUG-2018
 DEFINITION  Lassa virus segment S, complete sequence.
-ACCESSION   NC_004296 REGION: complement(1872..3347)
+ACCESSION   NC_004296_REF REGION: complement(1872..3347)
 VERSION     NC_004296.1
 DBLINK      BioProject: PRJNA485481
 KEYWORDS    RefSeq.
