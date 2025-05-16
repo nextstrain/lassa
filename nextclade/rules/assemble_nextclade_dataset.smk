@@ -28,22 +28,21 @@ See the Nextclade documentation for more information:
 
 rule assemble_dataset:
     input:
-        tree="auspice/tree.json",
-        reference="defaults/reference_gpc.fasta",
-        annotation="defaults/reference_gpc.gff3",
+        tree="auspice/tree_{segment}.json",
+        reference="defaults/{segment}/reference.fasta",
+        annotation="defaults/{segment}/reference.gff",
         sequences="defaults/example_sequences.fasta",
-        pathogen="defaults/pathogen.json",
+        pathogen="defaults/{segment}/pathogen.json",
         readme="defaults/README.md",
         changelog="defaults/CHANGELOG.md",
     output:
-        tree="dataset/tree.json",
-        reference="dataset/reference.fasta",
-        annotation="dataset/genome_annotation.gff3",
-        sequences="dataset/sequences.fasta",
-        pathogen="dataset/pathogen.json",
-        readme="dataset/README.md",
-        changelog="dataset/CHANGELOG.md",
-        dataset_zip="dataset.zip",
+        tree="dataset/{segment}/tree.json",
+        reference="dataset/{segment}/reference.fasta",
+        annotation="dataset/{segment}/genome_annotation.gff3",
+        sequences="dataset/{segment}/sequences.fasta",
+        pathogen="dataset/{segment}/pathogen.json",
+        readme="dataset/{segment}/README.md",
+        changelog="dataset/{segment}/CHANGELOG.md",
     shell:
         r"""
         cp {input.tree:q} {output.tree:q}
@@ -53,7 +52,6 @@ rule assemble_dataset:
         cp {input.pathogen:q} {output.pathogen:q}
         cp {input.readme:q} {output.readme:q}
         cp {input.changelog:q} {output.changelog:q}
-        zip -rj dataset.zip  dataset/*
         """
 
 rule test:

@@ -39,13 +39,13 @@ rule colors:
     input:
         color_schemes = "../phylogenetic/defaults/color_schemes.tsv",
         color_orderings = "../phylogenetic/defaults/color_orderings.tsv",
-        metadata = "data/metadata.tsv",
+        metadata = "data/{segment}/metadata_merged.tsv",
     output:
-        colors = "results/colors.tsv"
+        colors = "results/{segment}/colors.tsv"
     log:
-        "logs/colors.txt",
+        "logs/{segment}/colors.txt",
     benchmark:
-        "benchmarks/colors.txt"
+        "benchmarks/{segment}/colors.txt"
     shell:
         r"""
         python3 ../phylogenetic/scripts/assign-colors.py \
@@ -59,21 +59,21 @@ rule colors:
 rule export:
     """Exporting data files for for auspice"""
     input:
-        tree = "results/tree.nwk",
-        metadata = "data/metadata.tsv",
-        branch_lengths = "results/branch_lengths.json",
-        traits = "results/traits.json",
-        nt_muts = "results/nt_muts.json",
-        aa_muts = "results/aa_muts.json",
-        colors = "results/colors.tsv",
+        tree = "results/{segment}/tree.nwk",
+        metadata = "data/{segment}/metadata_merged.tsv",
+        branch_lengths = "results/{segment}/branch_lengths.json",
+        traits = "results/{segment}/traits.json",
+        nt_muts = "results/{segment}/nt_muts.json",
+        aa_muts = "results/{segment}/aa_muts.json",
+        colors = "results/{segment}/colors.tsv",
         description = config['export']['description'],
         auspice_config = config['export']['auspice_config'],
     output:
-        auspice = "results/lassa.json",
+        auspice = "auspice/tree_{segment}.json",
     log:
-        "logs/export.txt",
+        "logs/{segment}/export.txt",
     benchmark:
-        "benchmarks/export.txt"
+        "benchmarks/{segment}/export.txt"
     params:
         strain_id_field = config["strain_id_field"],
     shell:
@@ -88,29 +88,5 @@ rule export:
             --auspice-config {input.auspice_config:q} \
             --output {output.auspice:q} \
             --include-root-sequence-inline \
-            2>&1 | tee {log:q}
-        """
-
-rule final_strain_name:
-    input:
-        auspice_json="results/lassa.json",
-        metadata="data/metadata.tsv",
-    output:
-        auspice_json="auspice/tree.json",
-    log:
-        "logs/final_strain_name.txt",
-    benchmark:
-        "benchmarks/final_strain_name.txt"
-    params:
-        strain_id_field=config["strain_id_field"],
-        display_strain_field=config["display_strain_field"],
-    shell:
-        r"""
-        python3 ../phylogenetic/scripts/set_final_strain_name.py \
-            --metadata {input.metadata:q} \
-            --metadata-id-columns {params.strain_id_field:q} \
-            --input-auspice-json {input.auspice_json:q} \
-            --display-strain-name {params.display_strain_field:q} \
-            --output {output.auspice_json:q} \
             2>&1 | tee {log:q}
         """

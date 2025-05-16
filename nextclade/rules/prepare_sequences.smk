@@ -22,16 +22,26 @@ This part of the workflow usually includes the following steps:
 See Nextclade's and Augur's usage docs for these commands for more details.
 """
 
-# Manually pull GPC manually aligned sequences and metadata
-# And place in data folder
-#
-# augur filter \
-# --sequences ../phylogenetic/results/gpc/aligned.fasta \
-# --metadata ../phylogenetic/data/gpc/metadata.tsv \
-# --metadata-id-columns accession \
-# --exclude-all \
-# --include defaults/include.txt \
-# --output-metadata data/metadata.tsv \
-# --output-sequences data/sequences.fasta
-#
-# Add the clade_membership and lineage_name columns to the metadata
+rule align:
+    """
+    Align sequences based on segment type:
+    """
+    input:
+        sequences = "results/{segment}/filtered.fasta",
+        reference = "../phylogenetic/defaults/{segment}/reference.gb"
+    output:
+        alignment = "results/{segment}/aligned.fasta"
+    log:
+        "logs/{segment}/align.txt"
+    benchmark:
+        "benchmarks/{segment}/align.txt"
+    shell:
+        r"""
+        augur align \
+            --sequences {input.sequences:q} \
+            --reference-sequence {input.reference:q} \
+            --output {output.alignment:q} \
+            --fill-gaps \
+            --remove-reference \
+            2>&1 | tee {log:q}
+        """

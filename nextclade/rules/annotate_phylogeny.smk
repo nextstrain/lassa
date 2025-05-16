@@ -27,15 +27,15 @@ See Augur's usage docs for these commands for more details.
 rule ancestral:
     """Reconstructing ancestral sequences and mutations"""
     input:
-        tree = "results/tree.nwk",
-        alignment = "data/sequences.fasta",
-        reference_fasta = "defaults/reference_gpc.fasta",
+        tree = "results/{segment}/tree.nwk",
+        alignment = "results/{segment}/aligned.fasta",
+        reference_fasta = "defaults/{segment}/reference.fasta",
     output:
-        node_data = "results/nt_muts.json"
+        node_data = "results/{segment}/nt_muts.json"
     log:
-        "logs/ancestral.txt",
+        "logs/{segment}/ancestral.txt",
     benchmark:
-        "benchmarks/ancestral.txt"
+        "benchmarks/{segment}/ancestral.txt"
     params:
         inference = "joint"
     shell:
@@ -52,15 +52,15 @@ rule ancestral:
 rule translate:
     """Translating amino acid sequences"""
     input:
-        tree = "results/tree.nwk",
-        node_data = "results/nt_muts.json",
+        tree = "results/{segment}/tree.nwk",
+        node_data = "results/{segment}/nt_muts.json",
         reference = "../phylogenetic/defaults/gpc/reference.gb"
     output:
-        node_data = "results/aa_muts.json"
+        node_data = "results/{segment}/aa_muts.json"
     log:
-        "logs/translate.txt",
+        "logs/{segment}/translate.txt",
     benchmark:
-        "benchmarks/translate.txt"
+        "benchmarks/{segment}/translate.txt"
     shell:
         r"""
         augur translate \
@@ -74,14 +74,14 @@ rule translate:
 rule traits:
     """Inferring ancestral traits for {params.columns!s}"""
     input:
-        tree = "results/tree.nwk",
-        metadata = "data/metadata.tsv",
+        tree = "results/{segment}/tree.nwk",
+        metadata = "data/{segment}/metadata_merged.tsv",
     output:
-        node_data = "results/traits.json",
+        node_data = "results/{segment}/traits.json",
     log:
-        "logs/traits.txt",
+        "logs/{segment}/{segment}/traits.txt",
     benchmark:
-        "benchmarks/traits.txt"
+        "benchmarks/{segment}/traits.txt"
     params:
         strain_id_field = config["strain_id_field"],
         columns = config['traits']['columns']

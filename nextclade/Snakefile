@@ -8,15 +8,20 @@ workdir: workflow.current_basedir
 # Use default configuration values. Override with Snakemake's --configfile/--config options.
 configfile: "defaults/config.yaml"
 
+segments = ['gpc']
+
+wildcard_constraints:
+    segment = "|".join(segments)
+
 # This is the default rule that Snakemake will run when there are no specified targets.
 # The default output of the Nextclade workflow is usually the produced Nextclade dataset.
 # See Nextclade docs on expected naming conventions of dataset files
 # https://docs.nextstrain.org/projects/nextclade/page/user/datasets.html
 rule all:
     input:
-        tree="auspice/tree.json",
-        nextclade_dataset="dataset/tree.json",
-        test_dataset="test_out",
+        tree=expand("auspice/tree_{segment}.json", segment=segments),
+        nextclade_dataset=expand("dataset/{segment}/tree.json", segment=segments),
+        #test_dataset="test_out",
 
 # These rules are imported in the order that they are expected to run.
 # Each Snakefile will have documented inputs and outputs that should be kept as
