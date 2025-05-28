@@ -24,7 +24,8 @@
     "scoreMatch": 5,
     "retryReverseComplement": true,
     "allowedMismatches": 10,
-    "minSeedCover": 0.01
+    "minSeedCover": 0.01,
+    "minLength": 800
   },
   "qc": {
     "missingData": {

@@ -22,63 +22,52 @@ See Augur's usage docs for these commands for more details.
 rule tree:
     """Building tree"""
     input:
-        alignment = "data/sequences.fasta"
+        alignment = "results/{segment}/aligned.fasta"
     output:
-        tree = "results/tree_raw.nwk"
+        tree = "results/{segment}/tree_raw.nwk"
     log:
-        "logs/tree.txt",
+        "logs/{segment}/tree.txt",
     benchmark:
-        "benchmarks/tree.txt"
+        "benchmarks/{segment}/tree.txt"
     params:
         method = "iqtree"
     shell:
-        """
+        r"""
         augur tree \
-            --alignment {input.alignment} \
-            --output {output.tree} \
-            --method {params.method} \
-            2>&1 | tee {log}
+            --alignment {input.alignment:q} \
+            --output {output.tree:q} \
+            --method {params.method:q} \
+            2>&1 | tee {log:q}
         """
 
 rule refine:
     """
     Refining tree
       - estimate timetree
-      - use {params.coalescent} coalescent timescale
-      - estimate {params.date_inference} node dates
-      - fix clock rate at {params.clock_rate}
     """
     input:
-        tree = "results/tree_raw.nwk",
-        alignment = "data/sequences.fasta",
-        metadata = "data/metadata.tsv",
+        tree = "results/{segment}/tree_raw.nwk",
+        alignment = "results/{segment}/aligned.fasta",
+        metadata = "data/{segment}/metadata_merged.tsv",
     output:
-        tree = "results/tree.nwk",
-        node_data = "results/branch_lengths.json"
+        tree = "results/{segment}/tree.nwk",
+        node_data = "results/{segment}/branch_lengths.json",
     log:
-        "logs/refine.txt",
+        "logs/{segment}/refine.txt",
     benchmark:
-        "benchmarks/refine.txt"
+        "benchmarks/{segment}/refine.txt"
     params:
         strain_id_field = config["strain_id_field"],
-        coalescent = config['refine']['coalescent'],
-        date_inference = config['refine']['date_inference'],
-        clock_rate = config['refine']['clock_rate'],
-        root = lambda wildcards: config['refine']['root'],
+        refine_params = lambda wildcards: config['refine'][wildcards.segment],
     shell:
-        """
+        r"""
         augur refine \
-            --tree {input.tree} \
-            --alignment {input.alignment} \
-            --metadata {input.metadata} \
-            --metadata-id-columns {params.strain_id_field} \
-            --output-tree {output.tree} \
-            --output-node-data {output.node_data} \
-            --timetree \
-            --coalescent {params.coalescent} \
-            --clock-rate {params.clock_rate} \
-            --date-confidence \
-            --date-inference {params.date_inference} \
-            --root {params.root} \
-            2>&1 | tee {log}
+            --tree {input.tree:q} \
+            --alignment {input.alignment:q} \
+            --metadata {input.metadata:q} \
+            --metadata-id-columns {params.strain_id_field:q} \
+            --output-tree {output.tree:q} \
+            --output-node-data {output.node_data:q} \
+            {params.refine_params} \
+            2>&1 | tee {log:q}
         """

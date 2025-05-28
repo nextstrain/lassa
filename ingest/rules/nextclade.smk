@@ -18,6 +18,11 @@ like to customize the rules:
 https://docs.nextstrain.org/projects/nextclade/page/user/nextclade-cli.html
 """
 
+DATASET_NAMES = config["nextclade"]["dataset_name"]
+
+wildcard_constraints:
+    DATASET_NAME = "|".join(DATASET_NAMES)
+
 rule run_nextclade_to_identify_segment:
     input:
         sequences = "results/all/sequences.fasta",
@@ -28,23 +33,23 @@ rule run_nextclade_to_identify_segment:
     params:
         min_seed_cover = config["nextclade"]["min_seed_cover"],
     shell:
-        """
+        r"""
         nextclade run \
-            --input-ref {input.segment_reference} \
-            --output-fasta {output.sequences} \
-            --min-seed-cover {params.min_seed_cover} \
+            --input-ref {input.segment_reference:q} \
+            --output-fasta {output.sequences:q} \
+            --min-seed-cover {params.min_seed_cover:q} \
             --retry-reverse-complement true \
             --silent \
-            {input.sequences}
+            {input.sequences:q}
 
         echo "accession|segment" \
             | tr '|' '\t' \
-            > {output.segment}
+            > {output.segment:q}
 
-        grep ">" {output.sequences} \
+        grep ">" {output.sequences:q} \
             | sed 's/>//g' \
             | awk '{{print $1"\t{wildcards.segment}"}}' \
-            >> {output.segment}
+            >> {output.segment:q}
         """
 
 rule run_nextclade:
@@ -53,52 +58,48 @@ rule run_nextclade:
     """
     input:
         sequences="results/all/sequences.fasta",
-        dataset="../nextclade_data",
+        dataset=lambda wildcards: directory(f"../nextclade_data/{wildcards.DATASET_NAME}"),
     output:
-        nextclade="results/nextclade.tsv",
+        nextclade="results/{DATASET_NAME}/nextclade.tsv",
     threads: 4
-    params:
-        min_length=config["nextclade"]["min_length"],
     log:
-        "logs/run_nextclade.txt",
+        "logs/{DATASET_NAME}/run_nextclade.txt",
     benchmark:
-        "benchmarks/run_nextclade.txt",
+        "benchmarks/{DATASET_NAME}/run_nextclade.txt",
     shell:
         r"""
         nextclade3 run \
-            --input-dataset {input.dataset} \
-            -j {threads} \
-            --output-tsv {output.nextclade} \
+            --input-dataset {input.dataset:q} \
+            -j {threads:q} \
+            --output-tsv {output.nextclade:q} \
             --silent \
-            --min-length {params.min_length} \
-            {input.sequences} \
+            {input.sequences:q} \
           &> {log:q}
         """
 
-rule select_nextclade_results:
-    """
-    Select fields from the Nextclade results
-    """
+rule nextclade_metadata:
     input:
-        nextclade="results/nextclade.tsv",
+        nextclade="results/{DATASET_NAME}/nextclade.tsv",
     output:
-        nextclade=temp("data/nextclade_selected.tsv"),
-    params:
-        input_nextclade_fields=",".join([f'{key}' for key, value in config["nextclade"]["field_map"].items()]),
-        output_nextclade_fields=",".join([f'{value}' for key, value in config["nextclade"]["field_map"].items()]),
+        nextclade_metadata=temp("results/{DATASET_NAME}/nextclade_metadata.tsv"),
     log:
-        "logs/select_nextclade_results.txt",
+        "logs/{DATASET_NAME}/nextclade_metadata.txt",
     benchmark:
-        "benchmarks/select_nextclade_results.txt",
+        "benchmarks/{DATASET_NAME}/nextclade_metadata.txt",
+    params:
+        nextclade_id_field=config["nextclade"]["id_field"],
+        nextclade_field_map=lambda wildcard: [f"{old}={new}" for old, new in config["nextclade"][wildcard.DATASET_NAME]["field_map"].items()],
+        nextclade_fields=lambda wildcard: ",".join(config["nextclade"][wildcard.DATASET_NAME]["field_map"].values()),
     shell:
-        """
-        echo "{params.output_nextclade_fields}" \
-        | tr ',' '\t' \
-        > {output.nextclade}
-
-        tsv-select -H -f "{params.input_nextclade_fields}" {input.nextclade} \
-        | awk 'NR>1 {{print}}' \
-        >> {output.nextclade}
+        r"""
+        augur curate rename \
+            --metadata {input.nextclade:q} \
+            --id-column {params.nextclade_id_field:q} \
+            --field-map {params.nextclade_field_map:q} \
+            --output-metadata - \
+        | csvtk cut -t --fields {params.nextclade_fields:q} \
+        > {output.nextclade_metadata:q} \
+        2>&1 | tee {log:q}
         """
 
 rule append_nextclade_columns:
@@ -107,31 +108,26 @@ rule append_nextclade_columns:
     """
     input:
         metadata="data/subset_metadata.tsv",
-        nextclade="data/nextclade_selected.tsv",
+        nextclade="results/gpc/nextclade_metadata.tsv",
         s_segment="data/s/segment.tsv",
         l_segment="data/l/segment.tsv",
     output:
         metadata="results/all/metadata.tsv",
     params:
         metadata_id_field=config["curate"]["output_id_field"],
-        nextclade_id_field=config["nextclade"]["id_field"],
     log:
         "logs/append_nextclade_columns.txt",
     benchmark:
         "benchmarks/append_nextclade_columns.txt",
     shell:
-        """
+        r"""
         augur merge \
             --metadata \
                 metadata={input.metadata:q} \
                 nextclade={input.nextclade:q} \
                 s_segment={input.s_segment:q} \
                 l_segment={input.l_segment:q} \
-            --metadata-id-columns \
-                metadata={params.metadata_id_field:q} \
-                nextclade={params.nextclade_id_field:q} \
-                s_segment={params.metadata_id_field:q} \
-                l_segment={params.metadata_id_field:q} \
+            --metadata-id-columns {params.metadata_id_field:q} \
             --output-metadata {output.metadata:q} \
             --no-source-columns \
         &> {log:q}
@@ -148,16 +144,16 @@ rule subset_metadata_by_segment:
     params:
         strain_id_field = config["curate"]["output_id_field"],
     shell:
-        """
+        r"""
         augur filter \
-            --sequences {input.segment_sequences} \
-            --metadata {input.metadata} \
-            --metadata-id-columns {params.strain_id_field} \
-            --output-metadata {output.metadata}
+            --sequences {input.segment_sequences:q} \
+            --metadata {input.metadata:q} \
+            --metadata-id-columns {params.strain_id_field:q} \
+            --output-metadata {output.metadata:q}
 
         augur filter \
-            --sequences {input.sequences} \
-            --metadata {output.metadata} \
-            --metadata-id-columns {params.strain_id_field} \
-            --output-sequences {output.sequences}
+            --sequences {input.sequences:q} \
+            --metadata {output.metadata:q} \
+            --metadata-id-columns {params.strain_id_field:q} \
+            --output-sequences {output.sequences:q}
         """

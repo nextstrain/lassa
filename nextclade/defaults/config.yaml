@@ -7,20 +7,27 @@
 strain_id_field: "accession"
 display_strain_field: "strain"
 
+sequences_url: "https://data.nextstrain.org/files/workflows/lassa/all/sequences.fasta.zst"
+metadata_url: "https://data.nextstrain.org/files/workflows/lassa/all/metadata.tsv.zst"
+
+gpc_manual_alignment: "https://raw.githubusercontent.com/JoiRichi/LASV_ML_manuscript_data/main/alignment_preprocessing/final_passed_sequences_manual_curated.fasta"
+
+segments: ['gpc']
+
+filter:
+  gpc: '--exclude-all'
+
 tree:
   method: "iqtree"
 
 refine:
-  coalescent: "opt"
-  date_inference: "marginal"
-  clock_rate: 0.0006
-  root: "mid_point"
+  gpc: '--root mid_point'
 
 ancestral:
   inference: "joint"
 
 traits:
-  columns: "clade_membership lineage_name"
+  columns: "clade_membership"
 
 export:
   auspice_config: "defaults/auspice_config.json"

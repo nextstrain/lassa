@@ -30,9 +30,9 @@ rule download:
         sequences_url = config["sequences_url"],
         metadata_url = config["metadata_url"],
     shell:
-        """
-        curl -fsSL --compressed {params.sequences_url:q} --output {output.sequences}
-        curl -fsSL --compressed {params.metadata_url:q} --output {output.metadata}
+        r"""
+        curl -fsSL --compressed {params.sequences_url:q} --output {output.sequences:q}
+        curl -fsSL --compressed {params.metadata_url:q} --output {output.metadata:q}
         """
 
 rule decompress:
@@ -44,9 +44,9 @@ rule decompress:
         sequences = "data/{segment}/sequences.fasta",
         metadata = "data/{segment}/metadata.tsv"
     shell:
-        """
-        zstd -d -c {input.sequences} > {output.sequences}
-        zstd -d -c {input.metadata} > {output.metadata}
+        r"""
+        zstd -d -c {input.sequences:q} > {output.sequences:q}
+        zstd -d -c {input.metadata:q} > {output.metadata:q}
         """
 
 rule filter:
@@ -72,18 +72,18 @@ rule filter:
         query = config['filter']['query'],
         custom_params = config['filter']['custom_params'],
     shell:
-        """
+        r"""
         augur filter \
-            --sequences {input.sequences} \
-            --metadata {input.metadata} \
-            --metadata-id-columns {params.strain_id_field} \
-            --include {input.include} \
-            --exclude {input.exclude} \
-            --min-length {params.min_length} \
-            --query "{params.query}" \
-            --output {output.sequences} \
+            --sequences {input.sequences:q} \
+            --metadata {input.metadata:q} \
+            --metadata-id-columns {params.strain_id_field:q} \
+            --include {input.include:q} \
+            --exclude {input.exclude:q} \
+            --min-length {params.min_length:q} \
+            --query {params.query:q} \
+            --output {output.sequences:q} \
             {params.custom_params} \
-            2>&1 | tee {log}
+            2>&1 | tee {log:q}
         """
 
 rule download_alignment:
@@ -95,8 +95,8 @@ rule download_alignment:
     params:
         gpc_manual_alignment=config["gpc_manual_alignment"]
     shell:
-        """
-        curl -fsSL  {params.gpc_manual_alignment} --output {output.manual_curated_alignment}
+        r"""
+        curl -fsSL  {params.gpc_manual_alignment:q} --output {output.manual_curated_alignment:q}
         """
 
 rule find_and_remove_existing:
@@ -113,12 +113,12 @@ rule find_and_remove_existing:
     log:
         "logs/gpc/find_and_remove_existing.txt",
     shell:
-        """
+        r"""
         python scripts/manual_curated_processor.py \
-            --sequences {input.sequences} \
-            --manual-curated-alignment {input.manual_curated_alignment} \
-            --output-sequences {output.sequences} \
-            2>&1 | tee {log}
+            --sequences {input.sequences:q} \
+            --manual-curated-alignment {input.manual_curated_alignment:q} \
+            --output-sequences {output.sequences:q} \
+            2>&1 | tee {log:q}
         """
 
 rule align:
@@ -128,7 +128,7 @@ rule align:
     """
     input:
         sequences = "results/{segment}/filtered.fasta",
-        reference = "defaults/lassa_{segment}.gb"
+        reference = "defaults/{segment}/reference.gb"
     output:
         alignment = "results/{segment}/aligned.fasta"
     log:
@@ -136,14 +136,14 @@ rule align:
     benchmark:
         "benchmarks/{segment}/align.txt"
     shell:
-        """
+        r"""
         augur align \
-            --sequences {input.sequences} \
-            --reference-sequence {input.reference} \
-            --output {output.alignment} \
+            --sequences {input.sequences:q} \
+            --reference-sequence {input.reference:q} \
+            --output {output.alignment:q} \
             --fill-gaps \
             --remove-reference \
-            2>&1 | tee {log}
+            2>&1 | tee {log:q}
         """
 
 ruleorder: align_gpc > align
@@ -163,12 +163,12 @@ rule align_gpc:
     benchmark:
         "benchmarks/gpc/align_gpc.txt"
     shell:
-        """
+        r"""
         augur align \
-            --sequences {input.sequences} \
-            --existing-alignment {input.manual_alignment} \
-            --output {output.alignment} \
-            2>&1 | tee {log}
+            --sequences {input.sequences:q} \
+            --existing-alignment {input.manual_alignment:q} \
+            --output {output.alignment:q} \
+            2>&1 | tee {log:q}
         """
 
 ruleorder: filter_gpc > align
@@ -197,16 +197,16 @@ rule filter_gpc:
         query = config['filter']['query'],
         custom_params = config['filter']['custom_params'],
     shell:
-        """
+        r"""
         augur filter \
-            --sequences {input.sequences} \
-            --metadata {input.metadata} \
-            --metadata-id-columns {params.strain_id_field} \
-            --include {input.include} \
-            --exclude {input.exclude} \
-            --min-length {params.min_length} \
-            --query "{params.query}" \
-            --output {output.sequences} \
+            --sequences {input.sequences:q} \
+            --metadata {input.metadata:q} \
+            --metadata-id-columns {params.strain_id_field:q} \
+            --include {input.include:q} \
+            --exclude {input.exclude:q} \
+            --min-length {params.min_length:q} \
+            --query {params.query:q} \
+            --output {output.sequences:q} \
             {params.custom_params} \
-            2>&1 | tee {log}
+            2>&1 | tee {log:q}
         """

@@ -28,32 +28,30 @@ See the Nextclade documentation for more information:
 
 rule assemble_dataset:
     input:
-        tree="auspice/tree.json",
-        reference="defaults/reference_gpc.fasta",
-        annotation="defaults/reference_gpc.gff3",
+        tree="auspice/tree_{segment}.json",
+        reference="defaults/{segment}/reference.fasta",
+        annotation="defaults/{segment}/reference.gff",
         sequences="defaults/example_sequences.fasta",
-        pathogen="defaults/pathogen.json",
+        pathogen="defaults/{segment}/pathogen.json",
         readme="defaults/README.md",
         changelog="defaults/CHANGELOG.md",
     output:
-        tree="dataset/tree.json",
-        reference="dataset/reference.fasta",
-        annotation="dataset/genome_annotation.gff3",
-        sequences="dataset/sequences.fasta",
-        pathogen="dataset/pathogen.json",
-        readme="dataset/README.md",
-        changelog="dataset/CHANGELOG.md",
-        dataset_zip="dataset.zip",
+        tree="dataset/{segment}/tree.json",
+        reference="dataset/{segment}/reference.fasta",
+        annotation="dataset/{segment}/genome_annotation.gff3",
+        sequences="dataset/{segment}/sequences.fasta",
+        pathogen="dataset/{segment}/pathogen.json",
+        readme="dataset/{segment}/README.md",
+        changelog="dataset/{segment}/CHANGELOG.md",
     shell:
-        """
-        cp {input.tree} {output.tree}
-        cp {input.reference} {output.reference}
-        cp {input.annotation} {output.annotation}
-        cp {input.sequences} {output.sequences}
-        cp {input.pathogen} {output.pathogen}
-        cp {input.readme} {output.readme}
-        cp {input.changelog} {output.changelog}
-        zip -rj dataset.zip  dataset/*
+        r"""
+        cp {input.tree:q} {output.tree:q}
+        cp {input.reference:q} {output.reference:q}
+        cp {input.annotation:q} {output.annotation:q}
+        cp {input.sequences:q} {output.sequences:q}
+        cp {input.pathogen:q} {output.pathogen:q}
+        cp {input.readme:q} {output.readme:q}
+        cp {input.changelog:q} {output.changelog:q}
         """
 
 rule test:
@@ -63,9 +61,9 @@ rule test:
     output:
         output=directory("test_out"),
     shell:
-        """
+        r"""
         nextclade3 run \
-            --input-dataset {input.dataset} \
-            --output-all {output.output} \
-            {input.sequences}
+            --input-dataset {input.dataset:q} \
+            --output-all {output.output:q} \
+            {input.sequences:q}
         """

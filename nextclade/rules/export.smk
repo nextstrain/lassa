@@ -39,78 +39,54 @@ rule colors:
     input:
         color_schemes = "../phylogenetic/defaults/color_schemes.tsv",
         color_orderings = "../phylogenetic/defaults/color_orderings.tsv",
-        metadata = "data/metadata.tsv",
+        metadata = "data/{segment}/metadata_merged.tsv",
     output:
-        colors = "results/colors.tsv"
+        colors = "results/{segment}/colors.tsv"
     log:
-        "logs/colors.txt",
+        "logs/{segment}/colors.txt",
     benchmark:
-        "benchmarks/colors.txt"
+        "benchmarks/{segment}/colors.txt"
     shell:
-        """
+        r"""
         python3 ../phylogenetic/scripts/assign-colors.py \
-            --color-schemes {input.color_schemes} \
-            --ordering {input.color_orderings} \
-            --metadata {input.metadata} \
-            --output {output.colors} \
-            2>&1 | tee {log}
+            --color-schemes {input.color_schemes:q} \
+            --ordering {input.color_orderings:q} \
+            --metadata {input.metadata:q} \
+            --output {output.colors:q} \
+            2>&1 | tee {log:q}
         """
 
 rule export:
     """Exporting data files for for auspice"""
     input:
-        tree = "results/tree.nwk",
-        metadata = "data/metadata.tsv",
-        branch_lengths = "results/branch_lengths.json",
-        traits = "results/traits.json",
-        nt_muts = "results/nt_muts.json",
-        aa_muts = "results/aa_muts.json",
-        colors = "results/colors.tsv",
+        tree = "results/{segment}/tree.nwk",
+        metadata = "data/{segment}/metadata_merged.tsv",
+        branch_lengths = "results/{segment}/branch_lengths.json",
+        traits = "results/{segment}/traits.json",
+        nt_muts = "results/{segment}/nt_muts.json",
+        aa_muts = "results/{segment}/aa_muts.json",
+        colors = "results/{segment}/colors.tsv",
         description = config['export']['description'],
         auspice_config = config['export']['auspice_config'],
     output:
-        auspice = "results/lassa.json",
+        auspice = "auspice/tree_{segment}.json",
     log:
-        "logs/export.txt",
+        "logs/{segment}/export.txt",
     benchmark:
-        "benchmarks/export.txt"
+        "benchmarks/{segment}/export.txt"
     params:
         strain_id_field = config["strain_id_field"],
     shell:
-        """
+        r"""
         augur export v2 \
-            --tree {input.tree} \
-            --metadata {input.metadata} \
-            --metadata-id-columns {params.strain_id_field} \
-            --node-data {input.branch_lengths} {input.traits} {input.nt_muts} {input.aa_muts} \
-            --colors {input.colors} \
-            --description {input.description} \
-            --auspice-config {input.auspice_config} \
-            --output {output.auspice} \
+            --tree {input.tree:q} \
+            --metadata {input.metadata:q} \
+            --metadata-id-columns {params.strain_id_field:q} \
+            --node-data {input.branch_lengths:q} {input.traits:q} {input.nt_muts:q} {input.aa_muts:q} \
+            --colors {input.colors:q} \
+            --description {input.description:q} \
+            --auspice-config {input.auspice_config:q} \
+            --output {output.auspice:q} \
             --include-root-sequence-inline \
-            2>&1 | tee {log}
-        """
-
-rule final_strain_name:
-    input:
-        auspice_json="results/lassa.json",
-        metadata="data/metadata.tsv",
-    output:
-        auspice_json="auspice/tree.json",
-    log:
-        "logs/final_strain_name.txt",
-    benchmark:
-        "benchmarks/final_strain_name.txt"
-    params:
-        strain_id_field=config["strain_id_field"],
-        display_strain_field=config["display_strain_field"],
-    shell:
-        """
-        python3 ../phylogenetic/scripts/set_final_strain_name.py \
-            --metadata {input.metadata} \
-            --metadata-id-columns {params.strain_id_field} \
-            --input-auspice-json {input.auspice_json} \
-            --display-strain-name {params.display_strain_field} \
-            --output {output.auspice_json} \
-            2>&1 | tee {log}
+            2>&1 | tee {log:q}
         """
