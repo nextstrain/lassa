@@ -1,4 +1,4 @@
-# Dengue dataset
+# LASV dataset
 
 | Key  | Value  |
 | :-- | :-- |
