@@ -23,6 +23,7 @@ tree:
 
 refine:
   gpc: '--root mid_point'
+  l: '--root mid_point'
 
 ancestral:
   inference: "joint"
