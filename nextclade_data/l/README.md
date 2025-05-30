@@ -17,7 +17,7 @@ TBD
 
 This dataset supports:
 
-- Assignment of serotypes
+- Assignment of lineages
 - Phylogenetic placement
 - Sequence quality control (QC)
 
