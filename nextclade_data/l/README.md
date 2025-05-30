@@ -2,16 +2,16 @@
 
 | Key  | Value  |
 | :-- | :-- |
-| name  | Lassa Global Tree |
+| name  | Lassa L Segment Tree |
 | authors | [Nextstrain](https://nextstrain.org) |
-| reference | NC_004296 |
+| reference | NC_004297 |
 | workflow  | https://github.com/nextstrain/lassa/tree/main/nextclade  |
 | path  | `nextstrain/lassa` |
 
 
 ## Scope of this dataset
 
-TBD
+This Nextclade dataset places query sequences on a L scaffold tree for Lassa lineage assignments.
 
 ## Features
 

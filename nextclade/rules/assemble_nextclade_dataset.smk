@@ -33,7 +33,7 @@ rule assemble_dataset:
         annotation="defaults/{segment}/reference.gff",
         sequences="defaults/{segment}/example_sequences.fasta",
         pathogen="defaults/{segment}/pathogen.json",
-        readme="defaults/README.md",
+        readme="defaults/{segment}/README.md",
         changelog="defaults/CHANGELOG.md",
     output:
         tree="dataset/{segment}/tree.json",
