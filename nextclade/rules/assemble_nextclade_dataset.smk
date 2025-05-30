@@ -31,7 +31,7 @@ rule assemble_dataset:
         tree="auspice/tree_{segment}.json",
         reference="defaults/{segment}/reference.fasta",
         annotation="defaults/{segment}/reference.gff",
-        sequences="defaults/example_sequences.fasta",
+        sequences="defaults/{segment}/example_sequences.fasta",
         pathogen="defaults/{segment}/pathogen.json",
         readme="defaults/README.md",
         changelog="defaults/CHANGELOG.md",
@@ -57,9 +57,9 @@ rule assemble_dataset:
 rule test:
     input:
         dataset="dataset.zip",
-        sequences="defaults/example_sequences.fasta",
+        sequences="defaults/{segment}/example_sequences.fasta",
     output:
-        output=directory("test_out"),
+        output=directory("test_out/{segment}/"),
     shell:
         r"""
         nextclade3 run \

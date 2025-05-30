@@ -9,11 +9,11 @@
     "changelog": "CHANGELOG.md"
   },
   "schemaVersion": "3.0.0",
-  "defaultCds": "GPC",
+  "defaultCds": "L",
   "attributes": {
     "name": "Lassa Global Tree",
     "reference name": "Josiah",
-    "reference accession": "NC_004296"
+    "reference accession": "NC_004297"
   },
   "alignmentParams": {
     "penaltyGapExtend": 1,
