@@ -54,7 +54,7 @@ rule translate:
     input:
         tree = "results/{segment}/tree.nwk",
         node_data = "results/{segment}/nt_muts.json",
-        reference = "../phylogenetic/defaults/gpc/reference.gb"
+        reference = "../phylogenetic/defaults/{segment}/reference.gb"
     output:
         node_data = "results/{segment}/aa_muts.json"
     log:
@@ -79,7 +79,7 @@ rule traits:
     output:
         node_data = "results/{segment}/traits.json",
     log:
-        "logs/{segment}/{segment}/traits.txt",
+        "logs/{segment}/traits.txt",
     benchmark:
         "benchmarks/{segment}/traits.txt"
     params:

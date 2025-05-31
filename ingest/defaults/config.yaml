@@ -124,12 +124,16 @@ nextclade:
   min_seed_cover: 0.01
   # The name of the Nextclade dataset to use for running nextclade.
   # Run `nextclade dataset list` to get a full list of available Nextclade datasets
-  dataset_name: ["gpc"]
+  dataset_name: ["gpc", "l"]
   # The first column should be the original column name of the Nextclade TSV
   # The second column should be the new column name to use in the final metadata TSV
   # Nextclade can have pathogen specific output columns so make sure to check which
   # columns would be useful for your downstream phylogenetic analysis.
   gpc:
+    field_map:
+      seqName: "accession" # ID field used to merge annotations
+      clade: "lineage"
+  l:
     field_map:
       seqName: "accession" # ID field used to merge annotations
       clade: "lineage"

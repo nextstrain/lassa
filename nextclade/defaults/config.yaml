@@ -12,16 +12,18 @@ metadata_url: "https://data.nextstrain.org/files/workflows/lassa/all/metadata.ts
 
 gpc_manual_alignment: "https://raw.githubusercontent.com/JoiRichi/LASV_ML_manuscript_data/main/alignment_preprocessing/final_passed_sequences_manual_curated.fasta"
 
-segments: ['gpc']
+segments: ['gpc', 'l']
 
 filter:
   gpc: '--exclude-all'
+  l: '--exclude-all'
 
 tree:
   method: "iqtree"
 
 refine:
   gpc: '--root mid_point'
+  l: '--root mid_point'
 
 ancestral:
   inference: "joint"

@@ -53,16 +53,16 @@ rule align_gpc:
     Align sequences based on segment type:
     """
     input:
-        sequences = "results/{segment}/filtered.fasta",
-        metadata = "data/{segment}/metadata_merged.tsv",
-        reference = "../phylogenetic/defaults/{segment}/reference.gb",
-        guide_alignment = "defaults/{segment}/guide_alignment.fasta",
+        sequences = "results/gpc/filtered.fasta",
+        metadata = "data/gpc/metadata_merged.tsv",
+        reference = "../phylogenetic/defaults/gpc/reference.gb",
+        guide_alignment = "defaults/gpc/guide_alignment.fasta",
     output:
-        alignment = "results/{segment}/aligned.fasta"
+        alignment = "results/gpc/aligned.fasta"
     log:
-        "logs/{segment}/align.txt"
+        "logs/gpc/align.txt"
     benchmark:
-        "benchmarks/{segment}/align.txt"
+        "benchmarks/gpc/align.txt"
     shell:
         r"""
         mafft \
