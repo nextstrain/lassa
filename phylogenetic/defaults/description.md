@@ -11,10 +11,12 @@ We maintain two views of Lassa virus evolution: one showing evolution of the [L 
 
 ### Lineage Calling - Nextclade
 
-A GPC-based Nextclade dataset for calling Lassa lineages is available at the following links:
+Nextclade datasets for lineage assignment are available at the following links:
 
-* [View the Lassa Nextclade scaffold tree](https://next.nextstrain.org/staging/lassa/nextclade8)
-* [Query the Lassa Nextclade dataset](https://clades.nextstrain.org/?dataset-json-url=https%3A%2F%2Fnext.nextstrain.org%2Fstaging%2Flassa%2Fnextclade8)
+| Focus | Reference | Reference Tree | URL to Lassa Nextclade Dataset |
+| :-- | :-- | :-- | :-- |
+| GPC gene | [NC_004296 (Josiah)](https://github.com/nextstrain/lassa/blob/HEAD/nextclade/defaults/gpc/reference.fasta) | [View Tree](https://next.nextstrain.org/fetch/raw.githubusercontent.com/nextstrain/lassa/HEAD/nextclade_data/gpc/tree.json?d=tree&p=full) | [Query GPC Nextclade dataset](https://clades.nextstrain.org/?dataset-url=https://github.com/nextstrain/lassa/tree/HEAD/nextclade_data/gpc/) |
+| L segment | [NC_004297 (Josiah)](https://github.com/nextstrain/lassa/blob/HEAD/nextclade/defaults/l/reference.fasta) | [View Tree](https://next.nextstrain.org/fetch/raw.githubusercontent.com/nextstrain/lassa/HEAD/nextclade_data/l/tree.json?d=tree&p=full) | [Query L-segment Nextclade dataset](https://clades.nextstrain.org/?dataset-url=https://github.com/nextstrain/lassa/tree/HEAD/nextclade_data/l/) |
 
 ### Underlying data
 
