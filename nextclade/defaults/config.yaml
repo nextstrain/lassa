@@ -14,6 +14,10 @@ gpc_manual_alignment: "https://raw.githubusercontent.com/JoiRichi/LASV_ML_manusc
 
 segments: ['gpc', 'l']
 
+clade_membership:
+  metadata: "defaults/{segment}/metadata_clade_membership.tsv"
+  fallback: "lineage"
+
 filter:
   gpc: '--exclude-all'
   l: '--exclude-all'
@@ -22,7 +26,7 @@ tree:
   method: "iqtree"
 
 refine:
-  gpc: '--root mid_point'
+  gpc: '--root ROOT_UNCLASSIFIED'
   l: '--root mid_point'
 
 ancestral:

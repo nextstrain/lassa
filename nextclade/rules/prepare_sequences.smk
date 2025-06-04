@@ -80,5 +80,6 @@ rule align_gpc:
           --sequences {output.alignment:q}_temp \
           --metadata {input.metadata:q} \
           --metadata-id-columns "accession" \
-          --output-sequences {output.alignment:q}
+          --output-sequences {output.alignment:q} \
+          --min-length 800
         """

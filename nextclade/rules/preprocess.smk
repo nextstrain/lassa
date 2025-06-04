@@ -48,9 +48,9 @@ rule decompress:
 rule merge_clade_membership:
     input:
         metadata="data/metadata.tsv",
-        clade_membership="defaults/{segment}/metadata_clade_membership.tsv",
+        clade_membership=config['clade_membership']['metadata'],
     output:
-        merged_metadata="data/{segment}/metadata_merged.tsv",
+        merged_metadata="data/{segment}/metadata_merged_raw.tsv",
     benchmark:
         "benchmarks/{segment}/merge_clade_membership.txt",
     params:
@@ -62,6 +62,29 @@ rule merge_clade_membership:
         --metadata a={input.metadata:q} b={input.clade_membership:q} \
         --metadata-id-columns a={params.metadata_id:q} b={params.clade_membership_id:q} \
         --output-metadata {output.merged_metadata:q}
+        """
+
+rule fill_in_clade_membership:
+    input:
+        merged_metadata="data/{segment}/metadata_merged_raw.tsv",
+    output:
+        merged_metadata="data/{segment}/metadata_merged.tsv",
+    log:
+        "logs/{segment}/fill_in_clade_membership.txt",
+    benchmark:
+        "benchmarks/{segment}/fill_in_clade_membership.txt",
+    params:
+        clade_membership_column="clade_membership",
+        genotype_column=config['clade_membership']['fallback']
+    shell:
+        r"""
+        exec &> >(tee {log:q})
+
+        python scripts/fill-clade-membership.py \
+          --input-metadata {input.merged_metadata:q} \
+          --output-metadata {output.merged_metadata:q} \
+          --clade-membership-column {params.clade_membership_column:q} \
+          --genotype-column {params.genotype_column:q}
         """
 
 rule filter:
