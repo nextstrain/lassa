@@ -110,6 +110,7 @@ rule append_nextclade_columns:
         metadata="data/subset_metadata.tsv",
         gpc_nextclade="results/gpc/nextclade_metadata.tsv",
         l_nextclade="results/l/nextclade_metadata.tsv",
+        sub_lineage="defaults/sublineage_metadata.tsv",
         s_segment="data/s/segment.tsv",
         l_segment="data/l/segment.tsv",
     output:
@@ -127,6 +128,7 @@ rule append_nextclade_columns:
                 metadata={input.metadata:q} \
                 gpc_nextclade={input.gpc_nextclade:q} \
                 l_nextclade={input.l_nextclade:q} \
+                sublineage_nextclade={input.sub_lineage:q} \
                 s_segment={input.s_segment:q} \
                 l_segment={input.l_segment:q} \
             --metadata-id-columns {params.metadata_id_field:q} \
