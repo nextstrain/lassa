@@ -30,10 +30,16 @@ rule run_nextclade_to_identify_segment:
     output:
         sequences = "data/{segment}/sequences.fasta",
         segment = temp("data/{segment}/segment.tsv"),
+    log:
+        "logs/{segment}/run_nextclade_to_identify_segment.txt"
+    benchmark:
+        "benchmarks/{segment}/run_nextclade_to_identify_segment.txt"
     params:
         min_seed_cover = config["nextclade"]["min_seed_cover"],
     shell:
         r"""
+        exec &> >(tee {log:q})
+
         nextclade run \
             --input-ref {input.segment_reference:q} \
             --output-fasta {output.sequences:q} \
@@ -68,6 +74,8 @@ rule run_nextclade:
         "benchmarks/{DATASET_NAME}/run_nextclade.txt",
     shell:
         r"""
+        exec &> >(tee {log:q})
+
         nextclade3 run \
             --input-dataset {input.dataset:q} \
             -j {threads:q} \
@@ -92,6 +100,8 @@ rule nextclade_metadata:
         nextclade_fields=lambda wildcard: ",".join(config["nextclade"][wildcard.DATASET_NAME]["field_map"].values()),
     shell:
         r"""
+        exec &> >(tee {log:q})
+
         augur curate rename \
             --metadata {input.nextclade:q} \
             --id-column {params.nextclade_id_field:q} \
@@ -123,6 +133,8 @@ rule append_nextclade_columns:
         "benchmarks/append_nextclade_columns.txt",
     shell:
         r"""
+        exec &> >(tee {log:q})
+
         augur merge \
             --metadata \
                 metadata={input.metadata:q} \
@@ -145,10 +157,16 @@ rule subset_metadata_by_segment:
     output:
         metadata = "results/{segment}/metadata.tsv",
         sequences = "results/{segment}/sequences.fasta",
+    log:
+        "logs/{segment}/subset_metadata_by_segment.txt",
+    benchmark:
+        "benchmarks/{segment}/subset_metadata_by_segment.txt",
     params:
         strain_id_field = config["curate"]["output_id_field"],
     shell:
         r"""
+        exec &> >(tee {log:q})
+
         augur filter \
             --sequences {input.segment_sequences:q} \
             --metadata {input.metadata:q} \
