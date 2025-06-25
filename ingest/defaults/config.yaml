@@ -43,7 +43,7 @@ curate:
     accession_version: accession_version
     sourcedb: database
     sra-accs: sra_accessions
-    isolate-lineage: strain
+    isolate-lineage: isolate
     geo-region: region
     geo-location: location
     isolate-collection-date: date
@@ -61,7 +61,7 @@ curate:
   # Currently accepts any characters because we do not have a clear standard for strain names across pathogens
   strain_regex: "^.+$"
   # Back up strain name field to use if "strain" doesn"t match regex above
-  strain_backup_fields: ["accession"]
+  strain_backup_fields: ["isolate", "accession"]
   # List of date fields to standardize to ISO format YYYY-MM-DD
   date_fields: ["date", "date_released", "date_updated"]
   # The expected field that contains the GenBank geo_loc_name
@@ -100,6 +100,8 @@ curate:
     "accession",
     "accession_version",
     "strain",
+    "isolate",
+    "note",
     "date",
     "region",
     "country",
@@ -114,6 +116,7 @@ curate:
     "authors",
     "abbr_authors",
     "institution",
+    "segment_genbank",
   ]
 
 # Nextclade parameters to include if you are running Nextclade as a part of your ingest workflow
