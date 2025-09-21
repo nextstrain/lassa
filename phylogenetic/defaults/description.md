@@ -17,6 +17,7 @@ Nextclade datasets for lineage assignment are available at the following links:
 | :-- | :-- | :-- | :-- |
 | GPC gene | [NC_004296 (Josiah)](https://github.com/nextstrain/lassa/blob/HEAD/nextclade/defaults/gpc/reference.fasta) | [View Tree](https://next.nextstrain.org/fetch/raw.githubusercontent.com/nextstrain/lassa/HEAD/nextclade_data/gpc/tree.json?d=tree&p=full) | [Query GPC Nextclade dataset](https://clades.nextstrain.org/?dataset-url=https://github.com/nextstrain/lassa/tree/HEAD/nextclade_data/gpc/) |
 | L segment | [NC_004297 (Josiah)](https://github.com/nextstrain/lassa/blob/HEAD/nextclade/defaults/l/reference.fasta) | [View Tree](https://next.nextstrain.org/fetch/raw.githubusercontent.com/nextstrain/lassa/HEAD/nextclade_data/l/tree.json?d=tree&p=full) | [Query L-segment Nextclade dataset](https://clades.nextstrain.org/?dataset-url=https://github.com/nextstrain/lassa/tree/HEAD/nextclade_data/l/) |
+| S segment | [NC_004296 (Josiah)](https://github.com/nextstrain/lassa/blob/HEAD/nextclade/defaults/s/reference.fasta) | [View Tree](https://next.nextstrain.org/fetch/raw.githubusercontent.com/nextstrain/lassa/HEAD/nextclade_data/s/tree.json?d=tree&p=full) | [Query S-segment Nextclade dataset](https://clades.nextstrain.org/?dataset-url=https://github.com/nextstrain/lassa/tree/HEAD/nextclade_data/s/) |
 
 ### Underlying data
 

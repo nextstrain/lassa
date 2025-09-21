@@ -1,0 +1,20 @@
+{
+  "version": "v2",
+  "meta": {
+    "title": "Lassa S Segment Tree - Placeholder",
+    "description": "This is a placeholder tree.json file for the S segment. The actual tree will be generated when the nextclade workflow is run.",
+    "updated": "2024-01-01",
+    "build_url": "https://github.com/nextstrain/lassa/tree/HEAD/nextclade"
+  },
+  "tree": {
+    "name": "ROOT",
+    "node_attrs": {
+      "div": 0,
+      "clade_membership": {"value": "unclassified"}
+    },
+    "children": []
+  },
+  "root_sequence": {
+    "nuc": "PLACEHOLDER - Will be populated when tree is built"
+  }
+}
