@@ -1,0 +1,12 @@
+NC_079107.1 |Mammarenavirus dhati-welelense
+NC_027134.1 |Mammarenavirus marientalense
+NC_038367.1 |Mammarenavirus solweziense
+NC_078697.1 |Mammarenavirus kwanzaense
+NC_039012.1 |Mammarenavirus cameroonense
+NC_026246.1 |Mammarenavirus gairoense
+NC_078292.1 |Mammarenavirus kitaleense
+NC_078696.1 |Mammarenavirus bituense
+NC_078106.1 |Mammarenavirus alashanense
+NC_007903.1 |Mammarenavirus praomyidis
+NC_004296.1 |Mammarenavirus lassaense
+NC_007905.1 |Mammarenavirus ippyense

@@ -1,0 +1,9 @@
+NC_004297.1 |Mammarenavirus lassaense
+NC_038365.1 |Mammarenavirus loeiense
+NC_079108.1 |Mammarenavirus dhati-welelense
+NC_016153.1 |Mammarenavirus lunaense
+NC_078101.1 |Mammarenavirus lijiangense
+NC_078695.1 |Mammarenavirus bituense
+NC_007904.1 |Mammarenavirus praomyidis
+NC_026247.1 |Mammarenavirus gairoense
+NC_027136.1 |Mammarenavirus marientalense

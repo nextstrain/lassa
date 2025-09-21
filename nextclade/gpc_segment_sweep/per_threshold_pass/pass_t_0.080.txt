@@ -1,0 +1,7 @@
+NC_004296.1 |Mammarenavirus lassaense
+NC_027134.1 |Mammarenavirus marientalense
+NC_079107.1 |Mammarenavirus dhati-welelense
+NC_026246.1 |Mammarenavirus gairoense
+NC_007905.1 |Mammarenavirus ippyense
+NC_038367.1 |Mammarenavirus solweziense
+NC_078697.1 |Mammarenavirus kwanzaense

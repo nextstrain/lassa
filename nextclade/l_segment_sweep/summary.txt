@@ -1,0 +1,4 @@
+Suggested min-seed-cover cutoff: 0.12
+Sequences total: 44, keep-matching (e.g., LASV): 1
+PASS lists: per_threshold_pass/*.txt
+Interactive plot: elim_bar.html (horizontal bar chart)

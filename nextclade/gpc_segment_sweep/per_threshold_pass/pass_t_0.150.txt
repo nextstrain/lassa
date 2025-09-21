@@ -1,0 +1,2 @@
+NC_004296.1 |Mammarenavirus lassaense
+NC_026246.1 |Mammarenavirus gairoense

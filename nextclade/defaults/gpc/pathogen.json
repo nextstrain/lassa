@@ -24,8 +24,11 @@
     "scoreMatch": 5,
     "retryReverseComplement": true,
     "allowedMismatches": 10,
-    "minSeedCover": 0.01,
-    "minLength": 800
+    "minSeedCover": 0.16,
+    "minLength": 663, 
+    "notes": {
+    "minLength_source": "lowest tested length (Daodu et al. 2025, PLoS NTDs)"
+    }
   },
   "qc": {
     "missingData": {

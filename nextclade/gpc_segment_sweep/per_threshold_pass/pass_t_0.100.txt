@@ -1,0 +1,4 @@
+NC_004296.1 |Mammarenavirus lassaense
+NC_026246.1 |Mammarenavirus gairoense
+NC_079107.1 |Mammarenavirus dhati-welelense
+NC_038367.1 |Mammarenavirus solweziense

@@ -1,0 +1,3 @@
+NC_004297.1 |Mammarenavirus lassaense
+NC_079108.1 |Mammarenavirus dhati-welelense
+NC_016153.1 |Mammarenavirus lunaense
