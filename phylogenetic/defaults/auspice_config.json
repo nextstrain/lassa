@@ -55,6 +55,11 @@
       "type": "categorical"
     },
     {
+      "key": "sub_lineage",
+      "title": "Sub Lineage",
+      "type": "categorical"
+    },
+    {
       "key": "abbr_authors",
       "title": "Authors",
       "type": "categorical"
