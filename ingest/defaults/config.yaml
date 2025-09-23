@@ -149,3 +149,5 @@ nextclade:
   # This is the ID field you would use to match the Nextclade output with the record metadata.
   # This should be the new name that you have defined in your field map.
   id_field: "seqName"
+
+sublineage_metadata: "defaults/sublineage_metadata.tsv"

@@ -121,7 +121,7 @@ rule append_nextclade_columns:
         gpc_nextclade="results/gpc/nextclade_metadata.tsv",
         l_nextclade="results/l/nextclade_metadata.tsv",
         s_nextclade="results/s/nextclade_metadata.tsv",
-        sub_lineage="defaults/sublineage_metadata.tsv",
+        sub_lineage=config["sublineage_metadata"],
         s_segment="data/s/segment.tsv",
         l_segment="data/l/segment.tsv",
     output:
