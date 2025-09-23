@@ -250,9 +250,23 @@ host	Mastomys natalensis
 
 ################
 
-lineage	LI
-lineage	LII
-lineage	LIII
-lineage	LIV_V
-lineage	LVI
-lineage	LVII
+gpc_lineage	LI
+gpc_lineage	LII
+gpc_lineage	LIII
+gpc_lineage	LIV_V
+gpc_lineage	LVI
+gpc_lineage	LVII
+
+l_lineage	LI
+l_lineage	LII
+l_lineage	LIII
+l_lineage	LIV_V
+l_lineage	LVI
+l_lineage	LVII
+
+s_lineage	LI
+s_lineage	LII
+s_lineage	LIII
+s_lineage	LIV_V
+s_lineage	LVI
+s_lineage	LVII
