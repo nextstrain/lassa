@@ -42,7 +42,7 @@ ancestral:
   inference: "joint"
 
 traits:
-  columns: "country"
+  columns: country
 
 export:
   auspice_config: "defaults/auspice_config.json"
