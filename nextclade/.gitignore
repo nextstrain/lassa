@@ -3,9 +3,9 @@
 *_sweep/*.ndjson
 *_sweep/*.tsv
 *_sweep/stderr.log
+*_sweep/per_threshold_pass/
 
 # Keep only these essential files:
 # *_sweep/summary.txt
 # *_sweep/*.csv
 # *_sweep/*.html
-# *_sweep/per_threshold_pass/
