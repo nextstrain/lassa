@@ -9,9 +9,9 @@
     "changelog": "CHANGELOG.md"
   },
   "schemaVersion": "3.0.0",
-  "defaultCds": "GPC",
+  "defaultCds": "NP",
   "attributes": {
-    "name": "Lassa Global Tree",
+    "name": "Lassa S Segment Tree",
     "reference name": "Josiah",
     "reference accession": "NC_004296"
   },
@@ -24,11 +24,8 @@
     "scoreMatch": 5,
     "retryReverseComplement": true,
     "allowedMismatches": 10,
-    "minSeedCover": 0.16,
-    "minLength": 663, 
-    "notes": {
-    "minLength_source": "lowest tested length (Daodu et al. 2025, PLoS NTDs)"
-    }
+    "minSeedCover": 0.12,
+    "minLength": 800
   },
   "qc": {
     "missingData": {

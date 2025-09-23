@@ -40,8 +40,23 @@
       "type": "categorical"
     },
     {
-      "key": "lineage",
-      "title": "Lineage",
+      "key": "gpc_lineage",
+      "title": "GPC Lineage",
+      "type": "categorical"
+    },
+    {
+      "key": "l_lineage",
+      "title": "L Lineage",
+      "type": "categorical"
+    },
+    {
+      "key": "s_lineage",
+      "title": "S Lineage",
+      "type": "categorical"
+    },
+    {
+      "key": "sub_lineage",
+      "title": "Sub Lineage",
       "type": "categorical"
     },
     {

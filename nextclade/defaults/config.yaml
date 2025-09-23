@@ -12,7 +12,7 @@ metadata_url: "https://data.nextstrain.org/files/workflows/lassa/all/metadata.ts
 
 gpc_manual_alignment: "https://raw.githubusercontent.com/JoiRichi/LASV_ML_manuscript_data/main/alignment_preprocessing/final_passed_sequences_manual_curated.fasta"
 
-segments: ['gpc', 'l']
+segments: ['gpc', 'l', 's']
 
 clade_membership:
   metadata: "defaults/{segment}/metadata_clade_membership.tsv"
@@ -21,6 +21,7 @@ clade_membership:
 filter:
   gpc: '--exclude-all'
   l: '--exclude-all'
+  s: '--exclude-all'
 
 tree:
   method: "iqtree"
@@ -28,6 +29,7 @@ tree:
 refine:
   gpc: '--root ROOT_UNCLASSIFIED'
   l: '--root mid_point'
+  s: '--root mid_point'
 
 ancestral:
   inference: "joint"
