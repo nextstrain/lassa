@@ -26,7 +26,7 @@ wildcard_constraints:
 rule run_nextclade_to_identify_segment:
     input:
         sequences = "results/all/sequences.fasta",
-        segment_reference = config["nextclade"]["segment_reference"],
+        segment_reference = config["nextclade_segment"]["segment_reference"],
     output:
         sequences = "data/{segment}/sequences.fasta",
         segment = temp("data/{segment}/segment.tsv"),
@@ -35,7 +35,7 @@ rule run_nextclade_to_identify_segment:
     benchmark:
         "benchmarks/{segment}/run_nextclade_to_identify_segment.txt"
     params:
-        min_seed_cover = config["nextclade"]["min_seed_cover"],
+        min_seed_cover = config["nextclade_segment"]["min_seed_cover"],
     shell:
         r"""
         exec &> >(tee {log:q})
@@ -60,7 +60,7 @@ rule run_nextclade_to_identify_segment:
 
 rule run_nextclade:
     """
-    Lassa lineage call based on the GPC region (within the S segment)
+    Lassa lineage calls
     """
     input:
         sequences="results/all/sequences.fasta",
@@ -120,6 +120,7 @@ rule append_nextclade_columns:
         metadata="data/subset_metadata.tsv",
         gpc_nextclade="results/gpc/nextclade_metadata.tsv",
         l_nextclade="results/l/nextclade_metadata.tsv",
+        s_nextclade="results/s/nextclade_metadata.tsv",
         sub_lineage="defaults/sublineage_metadata.tsv",
         s_segment="data/s/segment.tsv",
         l_segment="data/l/segment.tsv",
@@ -140,6 +141,7 @@ rule append_nextclade_columns:
                 metadata={input.metadata:q} \
                 gpc_nextclade={input.gpc_nextclade:q} \
                 l_nextclade={input.l_nextclade:q} \
+                s_nextclade={input.s_nextclade:q} \
                 sublineage_nextclade={input.sub_lineage:q} \
                 s_segment={input.s_segment:q} \
                 l_segment={input.l_segment:q} \
