@@ -31,7 +31,7 @@ rule assemble_dataset:
         tree="auspice/tree_{segment}.json",
         reference="defaults/{segment}/reference.fasta",
         annotation="defaults/{segment}/reference.gff",
-        sequences="results/{segment}/sequences.fasta",
+        sequences="defaults/{segment}/sequences.fasta",
         pathogen="defaults/{segment}/pathogen.json",
         readme="defaults/{segment}/README.md",
         changelog="defaults/CHANGELOG.md",
