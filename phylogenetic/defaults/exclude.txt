@@ -1,11 +1,3 @@
-KT992425 # KAK_428 S segment
-KT992435 # KAK_428 L segment
-MH053556 # NGA/2016/ISTH_0779 L segment
-MH053584 # NGA/2016/ISTH_0779 S segment
-KU978809 # GUINEA_Z_185a L segment
-KU978810 # GUINEA_Z_185a S segment
-KU978811 # NIGERIA_IKEJI S segment
-KU978812 # NIGERIA_IKEJI L segment
 OR493499 # Large insertion off the end of the S segment
 OR493501 # Large insertion off the end of the S segment
 OR493502 # Large insertion off the end of the S segment
