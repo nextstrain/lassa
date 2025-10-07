@@ -53,6 +53,10 @@
       "key": "lineage_name",
       "title": "Lineage name",
       "type": "categorical"
+    },
+    { "key": "reference",
+      "title": "Reference",
+      "type": "categorical"
     }
   ],
   "geo_resolutions": [

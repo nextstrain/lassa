@@ -16,7 +16,7 @@ segments: ['gpc', 'l', 's']
 
 clade_membership:
   metadata: "defaults/{segment}/metadata_clade_membership.tsv"
-  fallback: "lineage"
+  fallback: "{segment}_lineage"
 
 filter:
   gpc: '--exclude-all'
