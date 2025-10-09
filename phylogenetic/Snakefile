@@ -18,6 +18,8 @@ rule all:
     input:
         auspice_tree = expand("auspice/lassa_{segment}.json", segment=segments)
 
+include: "../shared/vendored/snakemake/remote_files.smk"
+include: "rules/merge_inputs.smk"
 include: "rules/prepare_sequences.smk"
 include: "rules/construct_phylogeny.smk"
 include: "rules/annotate_phylogeny.smk"
