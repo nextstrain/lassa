@@ -68,11 +68,11 @@ if len(_input_metadata) == 1:
         input:
             metadata = _input_metadata[0],
         output:
-            metadata = "results/metadata.tsv",
+            metadata = "results/{segment}/metadata.tsv",
         log:
-            "logs/decompress_metadata.txt",
+            "logs/{segment}/decompress_metadata.txt",
         benchmark:
-            "benchmarks/decompress_metadata.txt",
+            "benchmarks/{segment}/decompress_metadata.txt",
         shell:
             r"""
             exec &> >(tee {log:q})
@@ -93,11 +93,11 @@ else:
             metadata = lambda w, input: list(map("=".join, input.items())),
             id_field = config['strain_id_field'],
         output:
-            metadata = "results/metadata.tsv"
+            metadata = "results/{segment}/metadata.tsv"
         log:
-            "logs/merge_metadata.txt",
+            "logs/{segment}/merge_metadata.txt",
         benchmark:
-            "benchmarks/merge_metadata.txt"
+            "benchmarks/{segment}/merge_metadata.txt"
         shell:
             r"""
             exec &> >(tee {log:q})
@@ -120,11 +120,11 @@ if len(_input_sequences) == 1:
         input:
             sequences = _input_sequences[0],
         output:
-            sequences = "results/sequences.fasta",
+            sequences = "results/{segment}/sequences.fasta",
         log:
-            "logs/decompress_sequences.txt",
+            "logs/{segment}/decompress_sequences.txt",
         benchmark:
-            "benchmarks/decompress_sequences.txt",
+            "benchmarks/{segment}/decompress_sequences.txt",
         shell:
             r"""
             exec &> >(tee {log:q})
@@ -142,11 +142,11 @@ else:
         input:
             **{name: info['sequences'] for name,info in input_sources.items() if info.get('sequences', None)}
         output:
-            sequences = "results/sequences.fasta",
+            sequences = "results/{segment}/sequences.fasta",
         log:
-            "logs/merge_sequences.txt",
+            "logs/{segment}/merge_sequences.txt",
         benchmark:
-            "benchmarks/merge_sequences.txt"
+            "benchmarks/{segment}/merge_sequences.txt"
         shell:
             r"""
             exec &> >(tee {log:q})
