@@ -7,8 +7,10 @@
 strain_id_field: "accession"
 display_strain_field: "strain"
 
-sequences_url: "https://data.nextstrain.org/files/workflows/lassa/all/sequences.fasta.zst"
-metadata_url: "https://data.nextstrain.org/files/workflows/lassa/all/metadata.tsv.zst"
+inputs:
+  - name: ncbi
+    sequences: "https://data.nextstrain.org/files/workflows/lassa/all/sequences.fasta.zst"
+    metadata: "https://data.nextstrain.org/files/workflows/lassa/all/metadata.tsv.zst"
 
 gpc_manual_alignment: "https://raw.githubusercontent.com/JoiRichi/LASV_ML_manuscript_data/main/alignment_preprocessing/final_passed_sequences_manual_curated.fasta"
 
