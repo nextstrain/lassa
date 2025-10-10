@@ -1,6 +1,8 @@
 # This configuration file contains the custom configurations parameters
 # for the CI workflow to run with the example data.
 
+segments: ["l", "s"]
+
 inputs:
   - name: example_data
     sequences: "example_data/sequences_{segment}.fasta"
