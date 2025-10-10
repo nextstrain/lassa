@@ -9,7 +9,7 @@ workdir: workflow.current_basedir
 # Use default configuration values. Override with Snakemake's --configfile/--config options.
 configfile: "defaults/config.yaml"
 
-segments = ["l", "s", "gpc"]
+segments = config['segments']
 
 wildcard_constraints:
     segment = "|".join(segments)
@@ -18,6 +18,8 @@ rule all:
     input:
         auspice_tree = expand("auspice/lassa_{segment}.json", segment=segments)
 
+include: "../shared/vendored/snakemake/remote_files.smk"
+include: "rules/merge_inputs.smk"
 include: "rules/prepare_sequences.smk"
 include: "rules/construct_phylogeny.smk"
 include: "rules/annotate_phylogeny.smk"

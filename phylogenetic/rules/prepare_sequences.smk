@@ -21,34 +21,6 @@ This part of the workflow usually includes the following steps:
 See Augur's usage docs for these commands for more details.
 """
 
-rule download:
-    """Downloading sequences and metadata from data.nextstrain.org"""
-    output:
-        sequences = "data/{segment}/sequences.fasta.zst",
-        metadata = "data/{segment}/metadata.tsv.zst"
-    params:
-        sequences_url = config["sequences_url"],
-        metadata_url = config["metadata_url"],
-    shell:
-        r"""
-        curl -fsSL --compressed {params.sequences_url:q} --output {output.sequences:q}
-        curl -fsSL --compressed {params.metadata_url:q} --output {output.metadata:q}
-        """
-
-rule decompress:
-    """Decompressing sequences and metadata"""
-    input:
-        sequences = "data/{segment}/sequences.fasta.zst",
-        metadata = "data/{segment}/metadata.tsv.zst"
-    output:
-        sequences = "data/{segment}/sequences.fasta",
-        metadata = "data/{segment}/metadata.tsv"
-    shell:
-        r"""
-        zstd -d -c {input.sequences:q} > {output.sequences:q}
-        zstd -d -c {input.metadata:q} > {output.metadata:q}
-        """
-
 rule filter:
     """
     Filtering to
@@ -56,8 +28,8 @@ rule filter:
       - excluding strains in {input.exclude}
     """
     input:
-        sequences = "data/{segment}/sequences.fasta",
-        metadata = "data/{segment}/metadata.tsv",
+        sequences = "results/{segment}/sequences.fasta",
+        metadata = "results/{segment}/metadata.tsv",
         include = config['filter']['include'],
         exclude = config['filter']['exclude']
     output:
