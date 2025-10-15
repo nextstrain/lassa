@@ -29,13 +29,13 @@ rule colors:
     input:
         color_schemes = "defaults/color_schemes.tsv",
         color_orderings = "defaults/color_orderings.tsv",
-        metadata = "results/{segment}/metadata.tsv",
+        metadata = "results/metadata.tsv",
     output:
-        colors = "results/{segment}/colors.tsv"
+        colors = "results/colors.tsv"
     log:
-        "logs/{segment}/colors.txt",
+        "logs/colors.txt",
     benchmark:
-        "benchmarks/{segment}/colors.txt"
+        "benchmarks/colors.txt"
     shell:
         r"""
         python3 {workflow.basedir}/../shared/vendored/scripts/assign-colors \
@@ -55,7 +55,7 @@ rule export:
         traits = "results/{segment}/traits.json",
         nt_muts = "results/{segment}/nt_muts.json",
         aa_muts = "results/{segment}/aa_muts.json",
-        colors = "results/{segment}/colors.tsv",
+        colors = "results/colors.tsv",
         description = config['export']['description'],
         auspice_config = config['export']['auspice_config'],
     output:
