@@ -29,7 +29,7 @@ rule colors:
     input:
         color_schemes = "defaults/color_schemes.tsv",
         color_orderings = "defaults/color_orderings.tsv",
-        metadata = "data/{segment}/metadata.tsv",
+        metadata = "results/{segment}/metadata.tsv",
     output:
         colors = "results/{segment}/colors.tsv"
     log:
@@ -38,7 +38,7 @@ rule colors:
         "benchmarks/{segment}/colors.txt"
     shell:
         r"""
-        python3 scripts/assign-colors.py \
+        python3 {workflow.basedir}/../shared/vendored/scripts/assign-colors \
             --color-schemes {input.color_schemes:q} \
             --ordering {input.color_orderings:q} \
             --metadata {input.metadata:q} \
@@ -50,7 +50,7 @@ rule export:
     """Exporting data files for for auspice"""
     input:
         tree = "results/{segment}/tree.nwk",
-        metadata = "data/{segment}/metadata.tsv",
+        metadata = "results/{segment}/filtered.tsv",
         branch_lengths = "results/{segment}/branch_lengths.json",
         traits = "results/{segment}/traits.json",
         nt_muts = "results/{segment}/nt_muts.json",
@@ -84,7 +84,7 @@ rule export:
 rule final_strain_name:
     input:
         auspice_json="results/{segment}/lassa.json",
-        metadata="data/{segment}/metadata.tsv",
+        metadata="results/{segment}/filtered.tsv",
     output:
         auspice_json="auspice/lassa_{segment}.json",
     log:
