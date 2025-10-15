@@ -55,7 +55,7 @@ rule filter:
             --exclude {input.exclude:q} \
             --min-length {params.min_length:q} \
             --query {params.query:q} \
-            --output {output.sequences:q} \
+            --output-sequences {output.sequences:q} \
             --output-metadata {output.metadata:q} \
             --output-log {output.log_strain:q} \
             {params.custom_params} \
