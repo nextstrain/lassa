@@ -8,8 +8,8 @@ segments: ["l", "s", "gpc"]
 
 inputs:
   - name: ncbi
-    sequences: "https://data.nextstrain.org/files/workflows/lassa/{segment}/sequences.fasta.zst"
-    metadata: "https://data.nextstrain.org/files/workflows/lassa/{segment}/metadata.tsv.zst"
+    sequences: "https://data.nextstrain.org/files/workflows/lassa/all/sequences.fasta.zst"
+    metadata: "https://data.nextstrain.org/files/workflows/lassa/all/metadata.tsv.zst"
 
 gpc_manual_alignment: "https://raw.githubusercontent.com/JoiRichi/LASV_ML_manuscript_data/main/alignment_preprocessing/final_passed_sequences_manual_curated.fasta"
 
@@ -23,7 +23,10 @@ filter:
     gpc: 800
   include: "defaults/include.txt" # need to always include root strains
   exclude: "defaults/exclude.txt"
-  query: "is_lab_host != 'true'"
+  query:
+    l: "(is_lab_host != 'true') & (segment == 'l')"
+    s: "(is_lab_host != 'true') & (segment == 's')"
+    gpc: "(is_lab_host != 'true') & (segment == 's') & (gpc_lineage != '')"
   # Necessary for is_lab_host to be read as a string instaed of a boolean
   custom_params: "--query-columns is_lab_host:str"
 

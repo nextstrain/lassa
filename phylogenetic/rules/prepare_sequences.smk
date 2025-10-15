@@ -28,8 +28,8 @@ rule filter:
       - excluding strains in {input.exclude}
     """
     input:
-        sequences = "results/{segment}/sequences.fasta",
-        metadata = "results/{segment}/metadata.tsv",
+        sequences = "results/sequences.fasta",
+        metadata = "results/metadata.tsv",
         include = config['filter']['include'],
         exclude = config['filter']['exclude']
     output:
@@ -43,7 +43,7 @@ rule filter:
     params:
         strain_id_field = config["strain_id_field"],
         min_length = lambda wildcards: config['filter']['min_length'][wildcards.segment],
-        query = config['filter']['query'],
+        query = lambda wildcards: config['filter']['query'][wildcards.segment],
         custom_params = config['filter']['custom_params'],
     shell:
         r"""
