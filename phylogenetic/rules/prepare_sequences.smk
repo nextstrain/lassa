@@ -34,6 +34,7 @@ rule filter:
         exclude = config['filter']['exclude']
     output:
         sequences = "results/{segment}/filtered.fasta",
+        metadata = "results/{segment}/filtered.tsv",
         log_strain = "results/{segment}/filter_log.txt",
     log:
         "logs/{segment}/filter.txt",
@@ -55,6 +56,7 @@ rule filter:
             --min-length {params.min_length:q} \
             --query {params.query:q} \
             --output {output.sequences:q} \
+            --output-metadata {output.metadata:q} \
             --output-log {output.log_strain:q} \
             {params.custom_params} \
             2>&1 | tee {log:q}
