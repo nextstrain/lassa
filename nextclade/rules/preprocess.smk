@@ -17,37 +17,9 @@ OUTPUTS:
 This part of the workflow usually includes steps to download and curate the required files.
 """
 
-rule download:
-    """Downloading sequences and metadata from data.nextstrain.org"""
-    output:
-        sequences = "data/sequences.fasta.zst",
-        metadata = "data/metadata.tsv.zst"
-    params:
-        sequences_url = config["sequences_url"],
-        metadata_url = config["metadata_url"],
-    shell:
-        """
-        curl -fsSL --compressed {params.sequences_url:q} --output {output.sequences}
-        curl -fsSL --compressed {params.metadata_url:q} --output {output.metadata}
-        """
-
-rule decompress:
-    """Decompressing sequences and metadata"""
-    input:
-        sequences = "data/sequences.fasta.zst",
-        metadata = "data/metadata.tsv.zst"
-    output:
-        sequences = "data/sequences.fasta",
-        metadata = "data/metadata.tsv"
-    shell:
-        """
-        zstd -d -c {input.sequences} > {output.sequences}
-        zstd -d -c {input.metadata} > {output.metadata}
-        """
-
 rule merge_clade_membership:
     input:
-        metadata="data/metadata.tsv",
+        metadata="results/metadata.tsv",
         clade_membership=config['clade_membership']['metadata'],
     output:
         merged_metadata="data/{segment}/metadata_merged_raw.tsv",
@@ -95,7 +67,7 @@ rule filter:
       - including strains in {input.include}
     """
     input:
-        sequences = "data/sequences.fasta",
+        sequences = "results/sequences.fasta",
         metadata = "data/{segment}/metadata_merged.tsv",
         exclude = "defaults/{segment}/exclude.txt",
         include = "defaults/{segment}/include.txt",
