@@ -4,6 +4,11 @@ We use this CHANGELOG to document breaking changes, new features, bug fixes,
 and config value changes that may affect both the usage of the workflows and
 the outputs of the workflows.
 
+## 2026
+
+* 13 October 2026: phylogenetic - support use of cached remote inputs [PR #89](https://github.com/nextstrain/lassa/pull/89) @joverlee521
+    * See https://github.com/nextstrain/shared/pull/87 for more details.
+
 ## 2025
 
 * 17 October 2025: phylogenetic and nextclade - Major update to the definition of inputs. ([#77][])
