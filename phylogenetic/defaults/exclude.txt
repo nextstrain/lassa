@@ -23,3 +23,6 @@ PQ421571 # Seems to be an alternative isolate of Josiah S segment
 PY046796 # Sequence appears to be a lab construct causing the tree to infer a future date (the GPC).
 FV537340 # lab
 FV537335 # lab
+FV537339 # lab
+FV537334 # lab
+FV537336 # lab
